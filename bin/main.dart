@@ -48,23 +48,25 @@ main(List<String> arguments) async {
   var slackApitoken = checkSlackApiToken();
   slack_history_keeper.slackApiToken = slackApitoken;
 
-  var users = await slack_history_keeper.fetchUsers();
-  var channels = await slack_history_keeper.fetchChannels();
-  var generalChannel = channels
-      .firstWhere((slack_history_keeper.Channel c) => c.name == 'general');
+//  var users = await slack_history_keeper.fetchUsers();
+//  var channels = await slack_history_keeper.fetchChannels();
+//  var generalChannel = channels
+//      .firstWhere((slack_history_keeper.Channel c) => c.name == 'general');
+//
+//  var messages =
+//      await slack_history_keeper.fetchChannelHistory(generalChannel.id);
+//
+//  messages.reversed.forEach((slack_history_keeper.Message m) => print(m));
+//
+//  new Timer.periodic(new Duration(seconds: 5), (Timer t) {
+//    if (messages.isEmpty) {
+//      fetchMessages(generalChannel, null, messages);
+//    } else {
+//      slack_history_keeper.Message lastMessage = messages.first;
+//
+//      fetchMessages(generalChannel, lastMessage, messages);
+//    }
+//  });
 
-  var messages =
-      await slack_history_keeper.fetchChannelHistory(generalChannel.id);
-
-  messages.reversed.forEach((slack_history_keeper.Message m) => print(m));
-
-  new Timer.periodic(new Duration(seconds: 5), (Timer t) {
-    if (messages.isEmpty) {
-      fetchMessages(generalChannel, null, messages);
-    } else {
-      slack_history_keeper.Message lastMessage = messages.first;
-
-      fetchMessages(generalChannel, lastMessage, messages);
-    }
-  });
+  slack_history_keeper.startApiServer();
 }
