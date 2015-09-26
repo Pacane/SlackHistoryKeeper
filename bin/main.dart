@@ -7,6 +7,7 @@ import 'package:slack_history_keeper/slack_history_keeper.dart'
 import 'dart:io';
 import 'package:logging/logging.dart';
 import 'dart:async';
+import 'package:slack_history_keeper/src/polling_daemon.dart';
 
 final Logger log = new Logger('Application');
 
@@ -69,4 +70,7 @@ main(List<String> arguments) async {
 //  });
 
   slack_history_keeper.startApiServer();
+
+  slack_history_keeper.PollingDaemon pollingDaemon = slack_history_keeper.pollingDaemon;
+  pollingDaemon.poll();
 }

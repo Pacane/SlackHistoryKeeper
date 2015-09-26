@@ -4,7 +4,9 @@ import 'package:redstone_mapper/mapper.dart';
 import 'package:redstone_mapper/mapper.dart';
 import 'package:redstone_mapper/mapper_factory.dart';
 import 'package:redstone_mapper_mongo/metadata.dart';
+import 'package:di/di.dart';
 
+@Injectable()
 class MessageRepository {
   Db db = new Db('mongodb://pacane:password1234!@ds059682.mongolab.com:59682/slack_history_staging2');
 
