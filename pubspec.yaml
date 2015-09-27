@@ -6,10 +6,17 @@ homepage: http://stacktrace.ca
 
 environment:
   sdk: '>=1.0.0 <2.0.0'
-
 dependencies:
   http: "^0.11.3+2"
   logging: "^0.11.1+1"
   quiver: "^0.21.4"
+  redstone: "^0.6.0+1"
+  redstone_mapper: "^0.2.0-beta.1+1"
+  redstone_mapper_mongo: "^0.2.0-beta.1"
+  connection_pool: "^0.1.0+2"
+dependency_overrides:
+  mongo_dart: "^0.2.4"
 dev_dependencies:
-  test: '>=0.12.0 <0.13.0'
+  test: "^0.12.4+9"
+transformers:
+- redstone_mapper
