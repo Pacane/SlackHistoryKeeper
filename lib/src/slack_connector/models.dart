@@ -1,7 +1,14 @@
 import 'package:quiver/core.dart';
+import 'package:redstone_mapper_mongo/metadata.dart';
+import 'package:redstone_mapper/mapper.dart';
 
 class Channel {
+  @Id()
+  String internalId;
+
+  @Field()
   String id;
+  @Field()
   String name;
 
   Channel();
@@ -18,7 +25,12 @@ class Channel {
 }
 
 class User {
+  @Id()
+  String internalId;
+
+  @Field()
   String id;
+  @Field()
   String name;
 
   User();
@@ -35,8 +47,14 @@ class User {
 }
 
 class Attachment {
+  @Id()
+  String internalId;
+
+  @Field()
   int id;
+  @Field()
   String from_url;
+  @Field()
   String image_url;
 
   Attachment.fromJson(Map json) {
@@ -49,11 +67,23 @@ class Attachment {
 class Message {
   static const String TYPE = 'message';
 
+  @Id()
+  String internalId;
+
+  @Field()
   String id;
+  @Field()
   String userId;
+  @Field()
   String subtype;
+  @Field()
   String timestamp;
+  @Field()
   String text;
+  @Field()
+  String channelId;
+
+  // TODO: Maybe serialize this
   List<Attachment> attachments;
 
   Message();
@@ -63,6 +93,7 @@ class Message {
     userId = json['user'];
     text = json['text'];
     subtype = json['subtype'];
+
     if (json['attachments'] != null) {
       List<Map> jsonAttachments = json['attachments'];
       attachments =
