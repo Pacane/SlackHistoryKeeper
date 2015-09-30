@@ -1,1 +1,9 @@
 <h1>Channels</h1>
+
+<select id="selectedChannel" (change)="onChannelChange($event)">
+    <option *ng-for="#channel of channels" [value]="channel.id">{{ channel.name }}</option>
+</select>
+
+<div *ng-if="channel != null">
+    {{ channel.id }} - {{ channel.name }}
+</div>
