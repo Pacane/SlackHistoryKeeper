@@ -7,7 +7,6 @@ library slack_history_keeper.test;
 import 'package:test/test.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'package:slack_history_keeper/src/message_repository.dart';
 
 // TODO: Fix tests to use DI
 

@@ -97,7 +97,7 @@ class Message {
     if (json['attachments'] != null) {
       List<Map> jsonAttachments = json['attachments'];
       attachments =
-      jsonAttachments.map((Map m) => new Attachment.fromJson(m)).toList();
+          jsonAttachments.map((Map m) => new Attachment.fromJson(m)).toList();
     } else {
       attachments = [];
     }

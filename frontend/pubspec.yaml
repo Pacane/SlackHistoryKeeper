@@ -1,0 +1,15 @@
+name: slack_history_keeper_frontend
+version: 0.0.0
+description:
+author:
+environment:
+  sdk: '>=1.12.0 <2.0.0'
+dependencies:
+  angular2: '^2.0.0-alpha.37'
+  browser: '^0.10.0+2'
+  http: "^0.11.3+2"
+  slack_history_keeper_shared:
+    path: ../shared
+transformers:
+- angular2:
+    entry_points: web/main.dart

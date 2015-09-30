@@ -1,4 +1,4 @@
-name: slack_history_keeper
+name: slack_history_keeper_backend
 version: 0.0.1
 description: A sample command-line application.
 author: Joel Trottier-Hebert <iamquebecois@gmail.com>
@@ -9,11 +9,12 @@ environment:
 dependencies:
   http: "^0.11.3+2"
   logging: "^0.11.1+1"
-  quiver: "^0.21.4"
   redstone: "^0.6.0+1"
   redstone_mapper: "^0.2.0-beta.1+1"
   redstone_mapper_mongo: "^0.2.0-beta.1"
   connection_pool: "^0.1.0+2"
+  slack_history_keeper_shared:
+    path: ../shared
 dependency_overrides:
   mongo_dart: "^0.2.4"
 dev_dependencies:

@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:slack_history_keeper/slack_history_keeper.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:slack_history_keeper/src/slack_connector/models.dart';
+import 'package:slack_history_keeper_shared/models.dart';
+import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
 
 class SlackConnector {
   Future<List<User>> fetchUsers() async {

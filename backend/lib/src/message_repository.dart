@@ -5,8 +5,8 @@ import 'package:di/di.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:redstone_mapper/mapper.dart';
 import 'package:redstone_mapper/mapper_factory.dart';
-import 'package:slack_history_keeper/src/mongo_db_pool.dart';
-import 'package:slack_history_keeper/src/slack_connector/models.dart';
+import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
+import 'package:slack_history_keeper_shared/models.dart';
 
 @Injectable()
 class MessageRepository {

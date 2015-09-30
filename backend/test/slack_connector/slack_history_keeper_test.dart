@@ -4,12 +4,11 @@
 
 library slack_history_keeper.test;
 
-import 'package:slack_history_keeper/slack_history_keeper.dart';
+import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
 import 'package:test/test.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'package:slack_history_keeper/src/slack_connector/models.dart';
-import 'package:slack_history_keeper/src/slack_connector/slack_connector.dart';
+import 'package:slack_history_keeper_shared/models.dart';
 
 void main() {
   slackApiToken = Platform.environment["SLACK_TOKEN"];

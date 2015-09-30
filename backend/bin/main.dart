@@ -6,8 +6,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:logging/logging.dart';
-import 'package:slack_history_keeper/slack_history_keeper.dart'
+import 'package:slack_history_keeper_backend/slack_history_keeper.dart'
     as slack_history_keeper;
+import 'package:slack_history_keeper_backend/rest_api/rest_api.dart' as rest_api;
 
 final Logger log = new Logger('Application');
 
@@ -35,6 +36,9 @@ String checkDatabaseUri() {
 void setupLogger() {
   Logger.root.onRecord.listen((LogRecord rec) {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
+    if (rec.error != null) {
+      print('${rec.level.name}: ${rec.time}: ${rec.message} ${rec.stackTrace}');
+    }
   });
 }
 
@@ -47,7 +51,7 @@ Future main(List<String> arguments) async {
   slack_history_keeper.databaseUri = checkDatabaseUri();
   slack_history_keeper.poolSize = 3;
 
-  slack_history_keeper.startApiServer();
+  rest_api.startApiServer();
 
   slack_history_keeper.PollingDaemon pollingDaemon =
       slack_history_keeper.pollingDaemon;
