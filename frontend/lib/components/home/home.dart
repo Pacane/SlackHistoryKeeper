@@ -21,6 +21,8 @@ class Home implements OnInit {
   @override
   ngOnInit() async {
     channels = await service.getChannels();
+
+    channel = channels.first;
   }
 
   onChannelChange(event) {

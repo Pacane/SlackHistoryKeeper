@@ -10,8 +10,8 @@ import 'package:slack_history_keeper_frontend/components/home/home.dart';
 @View(
     template: '''
     <nav>
-      <a [router-link]="['/Home']">Home</a>
-      <a [router-link]="['/About']">About</a>
+      <a [routerLink]="['/Home']">Home</a>
+      <a [routerLink]="['/About']">About</a>
     </nav>
     <router-outlet></router-outlet>
     ''',

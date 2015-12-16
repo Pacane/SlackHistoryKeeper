@@ -1,14 +1,5 @@
 <h1>Channels</h1>
 
-<h1>Checkout Form</h1>
-<form (ng-submit)="onSubmit()" #f="form">
-
-    <p>
-        <label for="country">Country</label>
-        <select id="country" ng-control="country" [(ng-model)]="channel">
-            <option *ng-for="#c of channels" [value]="c">{{c}}</option>
-        </select>
-    </p>
-
-    <button type="submit" >Submit</button>
-</form>
+<select [(ngModel)]="channel">
+    <option *ngFor="#c of channels">{{c}}</option>
+</select>
