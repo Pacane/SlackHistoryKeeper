@@ -57,6 +57,8 @@ class Attachment {
   @Field()
   String imageUrl;
 
+  Attachment();
+
   Attachment.fromJson(Map json) {
     id = json['id'];
     fromUrl = json['from_url'];

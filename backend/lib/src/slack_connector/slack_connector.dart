@@ -49,7 +49,6 @@ class SlackConnector {
         lastMessageTimestamp: lastTimestamp);
     List<Message> messages = _extractMessages(json);
 
-    bool hasMore = json['has_more'];
     bool isOk = json['ok'];
 
     checkIfMessageIsOk(isOk, json);
