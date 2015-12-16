@@ -8,6 +8,7 @@ library slack_history_keeper;
 export 'src/slack_connector/slack_connector.dart';
 export 'src/polling_daemon.dart';
 export 'src/services/channels_service.dart';
+export 'src/services/messages_service.dart';
 
 import 'package:di/di.dart';
 import 'package:slack_history_keeper_backend/src/message_repository.dart';

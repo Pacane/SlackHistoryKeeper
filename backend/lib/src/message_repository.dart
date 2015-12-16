@@ -20,11 +20,32 @@ class MessageRepository {
     bootstrapMapper();
   }
 
-  Future<List<Message>> fetchMessages() {
+  Future<List<Message>> fetchMessages(
+      {List<String> channelIds: const [], List<String> userIds: const []}) {
     return executeWrappedCommand((Db db) async {
       List<Message> messages = await db
           .collection("messages")
-          .find()
+          .find(where..sortBy("timestamp", descending: true))
+          .map((Map m) => decode(m, Message))
+          .toList();
+
+      return messages;
+    });
+  }
+
+  Future<List<Message>> queryMessages(String queryString,
+      {List<String> channelIds: const [], List<String> userIds: const []}) {
+    return executeWrappedCommand((Db db) async {
+      var query = where.sortBy("timestamp", descending: true);
+
+      if (queryString.isNotEmpty)
+        query = query.eq("\$text", {"\$search": queryString});
+      if (channelIds.isNotEmpty) query = query.oneFrom("channelId", channelIds);
+      if (userIds.isNotEmpty) query = query.oneFrom("userId", userIds);
+
+      List<Map> messages = await db
+          .collection("messages")
+          .find(query)
           .map((Map m) => decode(m, Message))
           .toList();
 

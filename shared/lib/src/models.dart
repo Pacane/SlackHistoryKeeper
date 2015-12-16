@@ -84,6 +84,8 @@ class Message {
   String text;
   @Field()
   String channelId;
+  @Field()
+  num score;
 
   @Field()
   List<Attachment> attachments;
