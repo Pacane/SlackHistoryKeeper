@@ -1,8 +1,10 @@
-<h1>Slack History Keeper</h1>
-
-<div class="search">
-	<input type="text" placeholder="I'd like to search about ...">
-</div>
+<form class="search">
+    <input type="text" placeholder="I'd like to search about ..." class="search__bar">
+    <i class="fa fa-search search__icon"></i>
+    <button type="submit" class="search__btn">
+        <i class="fa fa-chevron-right search__btn__icon"></i>
+    </button>
+</form>
 
 <select [(ngModel)]="channel">
     <option *ngFor="#c of channels">{{c}}</option>

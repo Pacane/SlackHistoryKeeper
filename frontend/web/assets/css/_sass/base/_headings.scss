@@ -6,6 +6,8 @@
 h1 {
 	font-size: $fz-h1;
 	@include font(light);
+
+	margin-bottom: .5em;
 }
 
 h2 {

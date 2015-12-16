@@ -4,7 +4,24 @@
  */
 
 .page {
+	text-align: center;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+  	align-content: stretch;
+	justify-content: center;
+
 	width: 900px;
+	min-height: 100%;
 	margin: 0 auto;
 	padding: 2em;
+}
+
+.page-header {
+
+}
+
+.page-content {
+
 }

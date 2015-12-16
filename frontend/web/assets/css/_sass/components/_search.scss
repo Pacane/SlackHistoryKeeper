@@ -1,0 +1,66 @@
+/**
+ * SEARCH
+ * components/search.scss
+ */
+
+.search {
+    margin-bottom: 2em;
+
+    position: relative;
+
+    &__bar {
+        width: 100%;
+        padding: 10px 10px 10px 40px;
+
+        border-radius: 20px;
+        border: none;
+
+        
+        @include prefixed(box-shadow, 0px 0px 10px 0px rgba(0, 0, 0, 0.25));
+
+        &:focus {
+            outline: none;
+
+            @include prefixed(box-shadow, 0px 0px 10px 0px rgba(0, 0, 0, 0.5));
+        }
+    }
+
+    &__icon {
+        font-size: 1.8rem;
+        opacity: .5;
+
+        position: absolute;
+        top: 9px;
+        left: 16px;
+    }
+
+    &__btn {
+        background: transparent;
+        font-size: 1.4rem;
+
+        padding: 10px;
+
+        position: absolute;
+        top: 1px;
+        right: 5px;
+
+        border: 0;
+
+        &__icon {
+            position: relative;
+            top: 0;
+            right: 0;
+
+            transition: right .2s;
+        }
+
+        &:hover,
+        &:focus {
+            outline: none;
+
+            .search__btn__icon {
+                right: -3px;
+            }
+        }
+    }
+}

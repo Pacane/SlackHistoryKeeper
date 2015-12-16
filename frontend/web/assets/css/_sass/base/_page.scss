@@ -8,7 +8,7 @@ html {
     font-size: 62.5%;
     color: $c-text;
     
-    min-height: 100%;
+    height: 100%;
 
     overflow-y: scroll;
 
@@ -20,7 +20,9 @@ html {
 
 body {
     background: #fff url("../img/noisy-texture-100x100-o3-d10-c-ffffff-t0.png") center top;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+
+    height: 100%;
 }
 
 p {
