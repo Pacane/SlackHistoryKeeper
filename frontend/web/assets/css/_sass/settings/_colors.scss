@@ -1,0 +1,19 @@
+/**
+ * COLORS
+ * settings/colors.scss
+ */
+
+$c-brand:						#FBE605;
+
+$c-text: 						#222;
+$c-text--light: 				#fff;
+$c-text--dark: 					#000;
+
+$c-background:					#f3f3f3;
+$c-background--light: 			#fff;
+$c-background--semidark: 		#231f20;
+$c-background--dark:			#010101;
+
+$c-stripe:						$c-background;
+$c-stripe--dark:				#222;
+$c-stripe--colored:				$c-brand;

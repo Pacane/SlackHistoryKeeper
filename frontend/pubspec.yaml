@@ -8,6 +8,7 @@ dependencies:
   angular2: '^2.0.0-beta.0'
   browser: '^0.10.0+2'
   http: "^0.11.3+2"
+  sass: '^0.4.2'
   slack_history_keeper_shared:
     path: ../shared
 dependency_overrides:
@@ -18,5 +19,7 @@ dependency_overrides:
   code_transformers: 0.3.1
   analyzer: 0.27.0
 transformers:
-- angular2:
-    entry_points: web/main.dart
+  - angular2:
+      entry_points: web/main.dart
+  - sass:
+      style: compact

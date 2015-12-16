@@ -1,0 +1,37 @@
+/**
+ * MIXINS
+ * generic/mixins.scss
+ */
+
+@mixin font($weight: normal) {
+    font-family: 'Raleway', sans-serif;
+    @if $weight == 'light' {
+        font-weight: 200;
+    } @else if $weight == 'bold' {
+        font-weight: 700;
+    } @else if $weight == 'xbold' {
+        font-weight: 900;
+    } @else {
+        font-weight: 400;
+    }
+}
+
+@mixin prefixed($property, $value) {
+    -webkit-#{$property}: #{$value};
+    -moz-#{$property}: #{$value};
+    -ms-#{$property}: #{$value};
+    -o-#{$property}: #{$value};
+	#{$property}: #{$value};
+}
+
+@mixin heading_block() {
+    content: "";
+
+    display: block;
+    width: 16px;
+    height: 5px;
+    background-color: $c-text;
+
+    position: relative;
+    left: 1px;
+}

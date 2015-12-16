@@ -1,0 +1,17 @@
+/**
+ * HELPERS
+ * trumps/helpers.scss
+ */
+
+.is-hidden {
+	display: none !important;
+}
+
+.is-centered {
+	text-align: center !important;
+}
+
+.is-responsive {
+	max-width: 100%;
+	height: auto;
+}
