@@ -10,14 +10,14 @@ import 'package:slack_history_keeper_frontend/components/home/home.dart';
 @View(
     template: '''
     <nav>
-      <a [router-link]="['/home']">Home</a>
-      <a [router-link]="['/about']">About</a>
+      <a [router-link]="['/Home']">Home</a>
+      <a [router-link]="['/About']">About</a>
     </nav>
     <router-outlet></router-outlet>
     ''',
     directives: const [ROUTER_DIRECTIVES, Home, About])
 @RouteConfig(const [
-    const Route(path: '/home', component: Home, as: 'home'),
-    const Route(path: '/about', component: About, as: 'about')
+    const Route(path: '/home', component: Home, name: 'Home'),
+    const Route(path: '/about', component: About, name: 'About')
 ])
 class App {}

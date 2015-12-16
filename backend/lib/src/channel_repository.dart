@@ -21,8 +21,7 @@ class ChannelRepository {
   }
 
   Future<List<Channel>> fetchChannels() {
-    return executeWrappedCommand(() async {
-      Db db = await getConnection();
+    return executeWrappedCommand((Db db) async {
       List<Channel> channels = await db
           .collection("channels")
           .find()
@@ -33,14 +32,12 @@ class ChannelRepository {
     });
   }
 
-
   Future insertChannels(List<Channel> channels) {
     channels.forEach((Channel c) => print("$c \n"));
 
     if (channels.isEmpty) return new Future.value();
 
-    return executeWrappedCommand(() async {
-      Db db = await getConnection();
+    return executeWrappedCommand((Db db) async {
       return db.collection("channels").insertAll(
           channels.map((Channel c) => encode(c)).toList(),
           writeConcern: new WriteConcern(fsync: true));
@@ -49,9 +46,9 @@ class ChannelRepository {
 
   Future executeWrappedCommand(CommandToExecute command) async {
     try {
-      connection = await connectionPool.getConnection();
+      var connection = await connectionPool.getConnection();
 
-      return await command();
+      return await command(connection.conn);
     } catch (e) {
       print("Error with database connection: $e}");
     } finally {
@@ -60,4 +57,4 @@ class ChannelRepository {
   }
 }
 
-typedef Future CommandToExecute();
+typedef Future CommandToExecute(Db db);

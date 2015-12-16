@@ -1,5 +1,7 @@
 import 'package:angular2/bootstrap.dart';
 import 'package:angular2/router.dart';
+import 'package:angular2/angular2.dart';
+
 import 'package:slack_history_keeper_frontend/app.dart';
 
 main() => bootstrap(App, [

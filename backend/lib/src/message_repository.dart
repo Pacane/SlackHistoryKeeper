@@ -36,8 +36,9 @@ class MessageRepository {
   Future<Message> getLatestMessage(String channelId) async {
     return executeWrappedCommand(() async {
       Db db = await getConnection();
-      Map fetched = await db.collection("messages").findOne(
-          where.sortBy('timestamp', descending: true).eq("channelId", channelId));
+      Map fetched = await db.collection("messages").findOne(where
+          .sortBy('timestamp', descending: true)
+          .eq("channelId", channelId));
       return decode(fetched, Message);
     });
   }
@@ -64,7 +65,15 @@ class MessageRepository {
       print("Error with database connection: $e}");
     } finally {
       connectionPool.releaseConnection(connection);
+      connection = null;
     }
+  }
+
+  Future clearMessages() async {
+    return executeWrappedCommand(() async {
+      Db db = await getConnection();
+      return db.collection("messages").drop();
+    });
   }
 }
 

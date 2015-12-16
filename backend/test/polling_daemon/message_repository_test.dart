@@ -5,28 +5,46 @@
 library slack_history_keeper.test;
 
 import 'package:test/test.dart';
-import 'dart:convert';
-import 'dart:io';
+import 'package:di/di.dart';
 
-// TODO: Fix tests to use DI
+import 'package:slack_history_keeper_shared/models.dart';
+import 'package:slack_history_keeper_backend/src/message_repository.dart';
+
+import '../database_module.dart';
+import 'repository_module.dart';
+
+ModuleInjector injector =
+    new ModuleInjector([repositoryModule, databaseModule]);
 
 void main() {
-  MessageRepository messageRepository = new MessageRepository();
+  final userId = '4329830';
+  final messageId = '2135465';
+  final timestamp = '234578767';
+  final text = 'hello!';
+
+  MessageRepository messageRepository = injector.get(MessageRepository);
 
   setUp(() async {
-    await messageRepository.db.open();
-    messageRepository.db.collection('messages').insert({'name': "hello"});
-    await messageRepository.db.close();
+    await messageRepository.insertMessages([
+      new Message()
+        ..id = messageId
+        ..userId = userId
+        ..timestamp = timestamp
+        ..attachments = []
+        ..text = text
+    ]);
   });
 
   tearDown(() async {
-    await messageRepository.db.open();
-    messageRepository.db.collection('messages').remove();
-    await messageRepository.db.close();
+    await messageRepository.clearMessages();
   });
 
   test('repository can fetch messages', () async {
     List<Message> messages = await messageRepository.fetchMessages();
-    expect(messages[0].name, 'hello');
+    expect(messages[0].id, messageId);
+    expect(messages[0].userId, userId);
+    expect(messages[0].timestamp, timestamp);
+    expect(messages[0].text, text);
+    expect(messages[0].attachments, []);
   });
 }

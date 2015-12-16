@@ -49,10 +49,18 @@ class SlackConnector {
         lastMessageTimestamp: lastTimestamp);
     List<Message> messages = _extractMessages(json);
 
+    bool hasMore = json['has_more'];
+    bool isOk = json['ok'];
+
+    checkIfMessageIsOk(isOk, json);
+
     while (json['has_more']) {
       String lastMessageTimestamp = messages.first.timestamp;
       json = await _fetchChannelHistory(channelId,
           lastMessageTimestamp: lastMessageTimestamp);
+
+      checkIfMessageIsOk(isOk, json);
+
       List<Message> remainingMessages = _extractMessages(json);
       messages.addAll(remainingMessages);
     }
@@ -60,6 +68,12 @@ class SlackConnector {
     messages.forEach((Message m) => m.channelId = channelId);
 
     return messages;
+  }
+
+  void checkIfMessageIsOk(bool isOk, Map json) {
+    if (!isOk) {
+      throw new Exception("Couldn't fetch messages. ${json['error']}");
+    }
   }
 
   Future<List<Channel>> fetchChannels({bool excludeArchived: false}) async {

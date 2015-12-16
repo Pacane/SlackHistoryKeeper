@@ -83,7 +83,7 @@ class Message {
   @Field()
   String channelId;
 
-  // TODO: Maybe serialize this
+  @Field()
   List<Attachment> attachments;
 
   Message();
