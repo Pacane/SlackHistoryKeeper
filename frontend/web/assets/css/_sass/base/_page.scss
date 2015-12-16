@@ -1,0 +1,28 @@
+/**
+ * PAGE
+ * base/page.scss
+ */
+
+html {
+    @include font();
+    font-size: 62.5%;
+    color: $c-text;
+    
+    min-height: 100%;
+
+    overflow-y: scroll;
+
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background: #fff url("../img/noisy-texture-100x100-o3-d10-c-ffffff-t0.png") center top;
+    font-size: 1.2rem;
+}
+
+p {
+	margin-bottom: 1.2em;
+}

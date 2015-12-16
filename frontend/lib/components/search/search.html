@@ -1,0 +1,9 @@
+<h1>Slack History Keeper</h1>
+
+<div class="search">
+	<input type="text" placeholder="I'd like to search about ...">
+</div>
+
+<select [(ngModel)]="channel">
+    <option *ngFor="#c of channels">{{c}}</option>
+</select>

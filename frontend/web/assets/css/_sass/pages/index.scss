@@ -1,0 +1,20 @@
+/**
+ * INDEX
+ * pages/index.scss
+ */
+
+.display {
+	text-align: center;
+
+	&__icon {
+		font-size: 10rem;
+		line-height: 1;
+
+		display: block;
+		margin-bottom: 1rem;
+	}
+
+	& > p {
+		text-align: left;
+	}
+}
