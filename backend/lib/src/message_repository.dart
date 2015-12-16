@@ -21,8 +21,7 @@ class MessageRepository {
   }
 
   Future<List<Message>> fetchMessages() {
-    return executeWrappedCommand(() async {
-      Db db = await getConnection();
+    return executeWrappedCommand((Db db) async {
       List<Message> messages = await db
           .collection("messages")
           .find()
@@ -34,8 +33,7 @@ class MessageRepository {
   }
 
   Future<Message> getLatestMessage(String channelId) async {
-    return executeWrappedCommand(() async {
-      Db db = await getConnection();
+    return executeWrappedCommand((Db db) async {
       Map fetched = await db.collection("messages").findOne(where
           .sortBy('timestamp', descending: true)
           .eq("channelId", channelId));
@@ -48,7 +46,7 @@ class MessageRepository {
 
     if (messages.isEmpty) return new Future.value();
 
-    return executeWrappedCommand(() async {
+    return executeWrappedCommand((Db db) async {
       Db db = await getConnection();
       return db.collection("messages").insertAll(
           messages.map((Message m) => encode(m)).toList(),
@@ -58,23 +56,22 @@ class MessageRepository {
 
   Future executeWrappedCommand(CommandToExecute command) async {
     try {
-      connection = await connectionPool.getConnection();
+      var connection = await connectionPool.getConnection();
 
-      return await command();
+      return await command(connection.conn);
     } catch (e) {
       print("Error with database connection: $e}");
     } finally {
       connectionPool.releaseConnection(connection);
-      connection = null;
     }
   }
 
   Future clearMessages() async {
-    return executeWrappedCommand(() async {
+    return executeWrappedCommand((Db db) async {
       Db db = await getConnection();
       return db.collection("messages").drop();
     });
   }
 }
 
-typedef Future CommandToExecute();
+typedef Future CommandToExecute(Db db);
