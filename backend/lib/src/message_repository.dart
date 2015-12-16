@@ -39,7 +39,10 @@ class MessageRepository {
       var query = where.sortBy("timestamp", descending: true);
 
       if (queryString.isNotEmpty)
-        query = query.eq("\$text", {"\$search": queryString});
+        query = query
+          ..eq("\$text", {"\$search": queryString})
+          ..metaTextScore("score")
+          ..sortByMetaTextScore("score");
       if (channelIds.isNotEmpty) query = query.oneFrom("channelId", channelIds);
       if (userIds.isNotEmpty) query = query.oneFrom("userId", userIds);
 
