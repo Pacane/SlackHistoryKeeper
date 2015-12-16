@@ -16,16 +16,12 @@ class Home implements OnInit {
   List<Channel> channels = [];
   Channel channel;
 
-  Home(this.service) {}
+  Home(this.service);
 
   @override
-  ngOnInit() async {
+  Future ngOnInit() async {
     channels = await service.getChannels();
 
     channel = channels.first;
-  }
-
-  onChannelChange(event) {
-    channel = channels.firstWhere((Channel c) => c.id == event.target.value);
   }
 }

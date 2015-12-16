@@ -5,7 +5,7 @@ import 'dart:async';
 class MongoDbPool extends ConnectionPool<Db> {
   String uri;
 
-  MongoDbPool(String this.uri, int poolSize) : super(poolSize);
+  MongoDbPool(this.uri, int poolSize) : super(poolSize);
 
   @override
   void closeConnection(Db conn) {
@@ -13,8 +13,11 @@ class MongoDbPool extends ConnectionPool<Db> {
   }
 
   @override
-  Future<Db> openNewConnection() {
+  Future<Db> openNewConnection() async {
     var conn = new Db(uri);
-    return conn.open().then((_) => conn);
+
+    await conn.open();
+
+    return conn;
   }
 }

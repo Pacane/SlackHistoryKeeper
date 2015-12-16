@@ -8,7 +8,7 @@ import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
 
 @Injectable()
 class PollingDaemon {
-  static final NUMBER_OF_SECONDS_TO_WAIT_BETWEEN_CHANNEL_POLLS = 2;
+  static const int numberOfSecondsBetweenChannelPolls = 2;
 
   /*
   If this is empty the daemon will poll all channels
@@ -23,13 +23,13 @@ class PollingDaemon {
 
   PollingDaemon(this.messageRepository, this.mongoDbPool, this.slackConnector);
 
-  filterChannelsToPoll() {
+  void filterChannelsToPoll() {
     if (channelsToPoll.isNotEmpty) {
       channels.retainWhere((Channel c) => channelsToPoll.contains(c.name));
     }
   }
 
-  saveNewMessages(Channel c) async {
+  Future saveNewMessages(Channel c) async {
     Logger.root.log(Level.INFO, "polling for channel ${c.name}");
     Message lastMessage = await messageRepository.getLatestMessage(c.id);
     List<Message> messages = [];
@@ -41,7 +41,7 @@ class PollingDaemon {
           lastTimestamp: lastTimeStampToFetch);
     }
 
-    messageRepository.insertMessages(messages);
+    await messageRepository.insertMessages(messages);
   }
 
   /*
@@ -57,7 +57,7 @@ class PollingDaemon {
     channels.forEach((Channel c) async {
       new Future.delayed(new Duration(seconds: secondsToDelay),
           () async => await saveNewMessages(c));
-      secondsToDelay += NUMBER_OF_SECONDS_TO_WAIT_BETWEEN_CHANNEL_POLLS;
+      secondsToDelay += numberOfSecondsBetweenChannelPolls;
     });
   }
 }

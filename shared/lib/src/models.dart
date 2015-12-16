@@ -18,7 +18,7 @@ class Channel {
     name = json['name'];
   }
 
-  bool operator ==(o) => o is Channel && o.name == name && o.id == id;
+  bool operator ==(Channel o) => o is Channel && o.name == name && o.id == id;
   int get hashCode => hash2(id.hashCode, name.hashCode);
 
   String toString() => "$id : $name";
@@ -40,7 +40,7 @@ class User {
     name = json['name'];
   }
 
-  bool operator ==(o) => o is User && o.name == name && o.id == id;
+  bool operator ==(User o) => o is User && o.name == name && o.id == id;
   int get hashCode => hash2(id.hashCode, name.hashCode);
 
   String toString() => "$id : $name";
@@ -53,19 +53,19 @@ class Attachment {
   @Field()
   int id;
   @Field()
-  String from_url;
+  String fromUrl;
   @Field()
-  String image_url;
+  String imageUrl;
 
   Attachment.fromJson(Map json) {
     id = json['id'];
-    from_url = json['from_url'];
-    image_url = json['image_url'];
+    fromUrl = json['from_url'];
+    imageUrl = json['image_url'];
   }
 }
 
 class Message {
-  static const String TYPE = 'message';
+  static const String type = 'message';
 
   @Id()
   String internalId;
@@ -113,7 +113,7 @@ class Message {
 
     if (attachments.isNotEmpty) {
       sb.write(":");
-      attachments.forEach((Attachment a) => sb.write(" << ${a.from_url} >>"));
+      attachments.forEach((Attachment a) => sb.write(" << ${a.fromUrl} >>"));
     }
 
     return '$parsedDateTime:$userId:$text$sb';

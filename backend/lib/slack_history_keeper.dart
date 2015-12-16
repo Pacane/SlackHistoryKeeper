@@ -20,18 +20,18 @@ String slackApiToken;
 String databaseUri;
 int poolSize;
 
-var repositoryModule = new Module()
+Module repositoryModule = new Module()
   ..bind(MessageRepository)
   ..bind(ChannelRepository);
 
-var databaseModule = new Module()
+Module databaseModule = new Module()
   ..bind(MongoDbPool, toValue: new MongoDbPool(databaseUri, poolSize));
 
-var pollingDaemonModule = new Module()
+Module pollingDaemonModule = new Module()
   ..bind(PollingDaemon)
   ..bind(SlackConnector);
 
-var injector =
+ModuleInjector injector =
     new ModuleInjector([pollingDaemonModule, repositoryModule, databaseModule]);
 
-var pollingDaemon = injector.get(PollingDaemon);
+PollingDaemon pollingDaemon = injector.get(PollingDaemon);
