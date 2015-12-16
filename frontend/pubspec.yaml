@@ -18,6 +18,9 @@ dependency_overrides:
     git: https://github.com/redstone-dart/redstone_mapper_mongo.git
   code_transformers: 0.3.1
   analyzer: 0.27.0
+dev_dependencies:
+  test: "^0.12.6+1"
+  mockito: "^0.11.0"
 transformers:
   - angular2:
       entry_points: web/main.dart
