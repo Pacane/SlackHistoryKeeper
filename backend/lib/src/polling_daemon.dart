@@ -1,6 +1,7 @@
 import 'package:di/di.dart';
 import 'dart:async';
 import 'package:logging/logging.dart';
+import 'package:quiver/strings.dart';
 import 'package:slack_history_keeper_shared/models.dart';
 import 'package:slack_history_keeper_backend/src/message_repository.dart';
 import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
@@ -40,6 +41,8 @@ class PollingDaemon {
       messages = await slackConnector.fetchChannelHistory(c.id,
           lastTimestamp: lastTimeStampToFetch);
     }
+
+    messages.removeWhere((Message m) => isBlank(m.text));
 
     await messageRepository.insertMessages(messages);
   }
