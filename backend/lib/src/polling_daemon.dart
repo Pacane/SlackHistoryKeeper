@@ -19,7 +19,6 @@ class PollingDaemon {
   final MongoDbPool mongoDbPool;
   final SlackConnector slackConnector;
 
-  List<User> users = [];
   List<Channel> channels = [];
 
   PollingDaemon(this.messageRepository, this.mongoDbPool, this.slackConnector);
@@ -52,7 +51,6 @@ class PollingDaemon {
   This doesn't catch edit to messages (yet)
    */
   Future poll() async {
-    users = await slackConnector.fetchUsers();
     channels = await slackConnector.fetchChannels();
     filterChannelsToPoll();
 

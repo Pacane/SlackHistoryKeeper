@@ -32,12 +32,15 @@ class User {
   String id;
   @Field()
   String name;
+  @Field()
+  String avatar;
 
   User();
 
   User.fromJson(Map json) {
     id = json['id'];
     name = json['name'];
+    avatar = json['profile']['image_72'];
   }
 
   bool operator ==(User o) => o is User && o.name == name && o.id == id;
