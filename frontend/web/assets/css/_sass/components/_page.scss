@@ -19,7 +19,11 @@
 }
 
 .page-header {
-
+	&__logo {
+		width: 80px;
+		height: auto;
+		margin-bottom: 15px;
+	}
 }
 
 .page-content {
