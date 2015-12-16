@@ -6,7 +6,7 @@ class MessagesGroup {
 
   MessagesGroup(this.messageService);
 
-  @app.DefaultRoute()
+  @app.DefaultRoute(responseType: "application/json")
   @Encode()
   Future<List<Message>> getMessages(@app.QueryParam("q") String query) {
     List<String> channelIds = app.request.queryParameters.get('c', []);

@@ -7,6 +7,7 @@ import 'package:redstone_mapper/mapper.dart';
 import 'package:redstone_mapper/mapper_factory.dart';
 import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
 import 'package:slack_history_keeper_shared/models.dart';
+import 'package:quiver/strings.dart';
 
 @Injectable()
 class MessageRepository {
@@ -38,7 +39,7 @@ class MessageRepository {
     return executeWrappedCommand((Db db) async {
       var query = where.sortBy("timestamp", descending: true);
 
-      if (queryString.isNotEmpty)
+      if (!isEmpty(queryString))
         query = query
           ..eq("\$text", {"\$search": queryString})
           ..metaTextScore("score")
@@ -71,7 +72,6 @@ class MessageRepository {
     if (messages.isEmpty) return new Future.value();
 
     return executeWrappedCommand((Db db) async {
-      Db db = await getConnection();
       return db.collection("messages").insertAll(
           messages.map((Message m) => encode(m)).toList(),
           writeConcern: new WriteConcern(fsync: true));

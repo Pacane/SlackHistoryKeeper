@@ -8,7 +8,6 @@ import 'package:redstone_mapper/plugin.dart';
 import 'package:shelf/shelf.dart';
 import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
 import 'package:slack_history_keeper_shared/models.dart';
-import 'package:quiver/strings.dart';
 import 'package:slack_history_keeper_backend/src/services/users_service.dart';
 
 part 'groups/channels_group.dart';

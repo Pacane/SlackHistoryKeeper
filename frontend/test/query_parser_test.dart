@@ -45,4 +45,38 @@ void main() {
     expect(result.userIds, isEmpty);
     expect(result.keywords, isNull);
   });
+
+  test('single from user', () async {
+    var userName = 'general';
+    var query = 'from:$userName';
+    var generalId = '1234';
+
+    when(nameToIdConverter.userNameToId(userName))
+        .thenReturn(new Future.value(generalId));
+
+    var result = await parser.parse(query);
+
+    expect(result.channelIds, isEmpty);
+    expect(result.userIds, contains(generalId));
+    expect(result.keywords, isNull);
+  });
+
+  test('multiple from user', () async {
+    var user1Name = 'general';
+    var user1Id = '1234';
+    var user2Name = 'random';
+    var user2Id = '4567';
+    var query = 'from:$user1Name from:$user2Name';
+
+    when(nameToIdConverter.userNameToId(user1Name))
+        .thenReturn(new Future.value(user1Id));
+    when(nameToIdConverter.userNameToId(user2Name))
+        .thenReturn(new Future.value(user2Id));
+
+    var result = await parser.parse(query);
+
+    expect(result.channelIds, isEmpty);
+    expect(result.userIds, [user1Id, user2Id]);
+    expect(result.keywords, isNull);
+  });
 }
