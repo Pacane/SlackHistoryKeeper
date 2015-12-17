@@ -5,7 +5,9 @@ import 'package:slack_history_keeper_frontend/services/slack_service.dart';
 import 'package:slack_history_keeper_shared/models.dart';
 
 @Component(selector: 'message')
-@View(templateUrl: 'message_component.html', directives: const [CORE_DIRECTIVES])
+@View(
+    templateUrl: 'message_component.html',
+    directives: const [COMMON_DIRECTIVES])
 class MessageComponent implements OnInit {
   @Input()
   Message message;
