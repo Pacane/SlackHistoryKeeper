@@ -7,6 +7,6 @@ Declare an environment variable called `SLACK_TOKEN` with a string value of your
 Declare an environment variable called `SLACK_DB_URI` with the URI of your mongo database that will store the messages.
 
 ## Usage
-This is fetch and print chat logs of the general channel : 
+This is fetch and print chat logs of the general channel :
 
 `dart bin/main.dart`
