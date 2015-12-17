@@ -24,7 +24,9 @@ class MessageParser implements PipeTransform {
 
   @override
   String transform(String message, List args) {
-    return markdownToHtml(message, inlineSyntaxes: inlineSyntaxes);
+    return markdownToHtml(message,
+        inlineSyntaxes: inlineSyntaxes,
+        blockSyntaxes: [new FencedCodeBlockSyntax()]);
   }
 }
 
@@ -81,5 +83,51 @@ class EmoticonSyntax extends InlineSyntax {
     img.attributes['class'] = "emoji";
     img.attributes['onerror'] = "javascript: this.src = '$emojisUrl/x.png';";
     return img;
+  }
+}
+
+class FencedCodeBlockSyntax extends BlockSyntax {
+  RegExp get pattern => new RegExp(r'^[ ]{0,3}(`{3,}|~{3,})(.*)$');
+
+  const FencedCodeBlockSyntax();
+
+  List<String> parseChildLines(BlockParser parser, [String endBlock]) {
+    if (endBlock == null) endBlock = '';
+
+    var childLines = <String>[];
+    parser.advance();
+
+    while (!parser.isDone) {
+      var match = pattern.firstMatch(parser.current);
+      if (match == null || !match[1].startsWith(endBlock)) {
+        childLines.add(parser.current);
+        parser.advance();
+      } else {
+        parser.advance();
+        break;
+      }
+    }
+
+    return childLines;
+  }
+
+  Node parse(BlockParser parser) {
+    // Get the syntax identifier, if there is one.
+    var match = pattern.firstMatch(parser.current);
+    var endBlock = match.group(1);
+    var syntax = match.group(2);
+
+    var childLines = parseChildLines(parser, endBlock);
+
+    // The Markdown tests expect a trailing newline.
+    childLines.add('');
+
+    // Escape the code.
+    var escaped = childLines.join('\n');
+
+    var element = new Element('pre', [new Element.text('code', escaped)]);
+    if (syntax != '') element.attributes['class'] = syntax;
+
+    return element;
   }
 }
