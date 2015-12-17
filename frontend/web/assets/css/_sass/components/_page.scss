@@ -23,13 +23,49 @@
 }
 
 .page-header {
+	margin-top: 0;
+
+	transition: margin-top 0.75s ease-in-out, transform 0.75s ease;
+	transform: translate3d(0, 0, 0) scale(1);
+
 	&__logo {
 		width: 80px;
 		height: auto;
 		margin-bottom: 15px;
 	}
+
+	&.animate {
+		-webkit-animation-name: pulse;
+		-webkit-animation-duration: 1s;
+		-webkit-animation-iteration-count: 1;
+		-webkit-animation-timing-function: ease-in-out;
+		-webkit-animation-fill-mode: forwards;
+	}
+
+	&.is-loading {
+		margin-top: calc(50% - 350px);
+
+		-webkit-animation-play-state: running;
+		-webkit-animation-iteration-count: infinite;
+	}
 }
 
 .page-content {
+	opacity: 0;
+	height: 0;
 
+	&.is-visible {
+		opacity: 1;
+
+		transition: opacity 0.75s 0.8s linear, height 0s 0.75s;
+	}
+}
+
+@-webkit-keyframes pulse {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(0.9);
+	}
 }
