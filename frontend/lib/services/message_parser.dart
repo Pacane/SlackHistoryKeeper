@@ -71,6 +71,7 @@ class EmoticonSyntax extends InlineSyntax {
     }
 
     img.attributes['alt'] = name;
+    img.attributes['class'] = "emoji";
     img.attributes['onerror'] = "javascript: this.src = '$emojisUrl/x.png';";
     return img;
   }
