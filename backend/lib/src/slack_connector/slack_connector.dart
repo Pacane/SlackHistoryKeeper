@@ -107,4 +107,18 @@ class SlackConnector {
 
     return channels;
   }
+
+  Future<Map<String, Emoticon>> fetchEmoticons() async {
+    var url =
+        'https://slack.com/api/emoji.list?token=$slackApiToken&pretty=1';
+    var response = await http.get(url);
+
+    Map json = JSON.decode(response.body);
+    Map<String, Emoticon> emoticons = {};
+    json['emoji'].forEach((String k, String v) => emoticons[k] = new Emoticon.data(k, v));
+
+    cache.emoticons = emoticons;
+
+    return emoticons;
+  }
 }
