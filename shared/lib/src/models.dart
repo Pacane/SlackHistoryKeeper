@@ -126,3 +126,28 @@ class Message {
     return '$parsedDateTime:$userId:$text$sb';
   }
 }
+
+class SlackCache {
+  Map<String, User> _users = {};
+  Map<String, Channel> _channels = {};
+
+  List<Channel> getChannels() {
+    return _channels.values.toList();
+  }
+
+  List<User> getUsers() {
+    return _users.values.toList();
+  }
+
+  Channel getChannelfromId(String id) => _channels[id];
+
+  User getUserFromId(String id) => _users[id];
+
+  void set users(Map<String, User> users) {
+    _users = users;
+  }
+
+  void set channels(Map<String, Channel> channels) {
+    _channels = channels;
+  }
+}

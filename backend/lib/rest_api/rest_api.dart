@@ -26,7 +26,8 @@ Future startApiServer() async {
     ..bind(SlackConnector)
     ..bind(ChannelsService)
     ..bind(UsersService)
-    ..bind(MessagesService));
+    ..bind(MessagesService)
+    ..bind(SlackCache, toValue: injector.get(SlackCache)));
 
   app.start(port: port);
 }

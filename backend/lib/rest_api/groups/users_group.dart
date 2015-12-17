@@ -8,7 +8,7 @@ class UsersGroup {
 
   @app.DefaultRoute()
   @Encode()
-  Future<List<User>> getUsers() {
-    return usersService.fetchUsersFromSlackApi();
+  List<User> getUsers() {
+    return usersService.getUsers();
   }
 }
