@@ -1,12 +1,12 @@
 <article class="message">
     <div class="message__content">
         <header class="message__header">
-            <h1 class="message__header__title">{{message.userId}}</h1>
+            <h1 class="message__header__title">{{user?.name}}</h1>
             <p class="message__header__time"><time pubdate datetime="2009-10-10T19:10-08:00">{{message.timestamp}}</time></p>
         </header>
         <p>{{ message.text }}</p>
     </div>
     <div class="message__avatar">
-        <img src="/assets/img/avatar.png"/>
+        <img src="{{user?.avatar}}"/>
     </div>
 </article>

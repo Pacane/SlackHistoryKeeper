@@ -1,6 +1,4 @@
-import 'dart:async';
-
 abstract class NameToId {
-  Future<String> channelNameToId(String channelName);
-  Future<String> userNameToId(String userName);
+  String channelNameToId(String channelName);
+  String userNameToId(String userName);
 }
