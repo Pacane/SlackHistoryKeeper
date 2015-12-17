@@ -5,13 +5,14 @@ import 'package:slack_history_keeper_frontend/services/slack_service.dart';
 import 'package:slack_history_keeper_shared/models.dart';
 import 'dart:async';
 import 'package:slack_history_keeper_frontend/services/query_parser.dart';
+import 'package:slack_history_keeper_frontend/components/messages/messages.dart';
 
 @Component(
     selector: 'search',
-    viewProviders: const [SlackService, QueryParser])
+    viewProviders: const [SlackService, QueryParser, Messages])
 @View(
     templateUrl: 'search.html',
-    directives: const [CORE_DIRECTIVES, FORM_DIRECTIVES])
+    directives: const [CORE_DIRECTIVES, FORM_DIRECTIVES, Messages])
 class Search implements OnInit {
   final SlackService service;
   final QueryParser queryParser;
@@ -31,9 +32,11 @@ class Search implements OnInit {
   Future onSubmit() async {
     var query = await queryParser.parse(queryText);
 
-    List<Message> messages = await service.search(query);
+    List<Message> data = await service.search(query);
 
-    for(var message in messages) {
+    Messages.showMessages(data);
+
+    for(var message in data) {
       print(message);
     }
   }

@@ -6,6 +6,7 @@ import 'package:angular2/router.dart';
 import 'package:slack_history_keeper_frontend/components/about/about.dart';
 import 'package:slack_history_keeper_frontend/components/home/home.dart';
 import 'package:slack_history_keeper_frontend/components/search/search.dart';
+import 'package:slack_history_keeper_frontend/components/messages/messages.dart';
 
 @Component(selector: 'app')
 @View(
@@ -21,6 +22,7 @@ import 'package:slack_history_keeper_frontend/components/search/search.dart';
 @RouteConfig(const [
     const Route(path: '/home', component: Home, name: 'Home'),
     const Route(path: '/about', component: About, name: 'About'),
+    const Route(path: '/messages', component: Messages, name: 'Messages'),
     const Route(path: '/', component: Search, name: 'Search')
 ])
 class App {}
