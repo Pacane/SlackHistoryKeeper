@@ -1,8 +1,8 @@
 import 'package:test/test.dart';
 import 'package:slack_history_keeper_frontend/services/query_parser.dart';
-import 'package:slack_history_keeper_frontend/services/name_to_id_mixin.dart';
 import 'package:mockito/mockito.dart';
 import 'dart:async';
+import 'package:slack_history_keeper_frontend/services/name_to_id_mixin.dart';
 
 class MockNameToId extends Mock implements NameToId {
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
@@ -18,7 +18,7 @@ void main() {
     var generalId = '1234';
 
     when(nameToIdConverter.channelNameToId(channelName))
-        .thenReturn(new Future.value(generalId));
+        .thenReturn(generalId);
 
     var result = await parser.parse(query);
 
@@ -35,9 +35,9 @@ void main() {
     var query = 'in:$channel1Name in:$channel2Name';
 
     when(nameToIdConverter.channelNameToId(channel1Name))
-        .thenReturn(new Future.value(channel1Id));
+        .thenReturn(channel1Id);
     when(nameToIdConverter.channelNameToId(channel2Name))
-        .thenReturn(new Future.value(channel2Id));
+        .thenReturn(channel2Id);
 
     var result = await parser.parse(query);
 
@@ -52,7 +52,7 @@ void main() {
     var generalId = '1234';
 
     when(nameToIdConverter.userNameToId(userName))
-        .thenReturn(new Future.value(generalId));
+        .thenReturn(generalId);
 
     var result = await parser.parse(query);
 
@@ -69,9 +69,9 @@ void main() {
     var query = 'from:$user1Name from:$user2Name';
 
     when(nameToIdConverter.userNameToId(user1Name))
-        .thenReturn(new Future.value(user1Id));
+        .thenReturn(user1Id);
     when(nameToIdConverter.userNameToId(user2Name))
-        .thenReturn(new Future.value(user2Id));
+        .thenReturn(user2Id);
 
     var result = await parser.parse(query);
 
