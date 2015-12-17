@@ -9,6 +9,8 @@ import 'package:redstone_mapper/mapper.dart';
 import 'package:redstone_mapper/mapper_factory.dart';
 import 'package:slack_history_keeper_frontend/services/query_parser.dart' as qp;
 import 'package:slack_history_keeper_frontend/services/name_to_id_mixin.dart';
+import 'package:event_bus/event_bus.dart';
+import 'package:slack_history_keeper_frontend/events/slack_data_loaded_event.dart';
 
 const String apiUrl = 'http://localhost:8084/api';
 
@@ -16,13 +18,15 @@ const String apiUrl = 'http://localhost:8084/api';
 class SlackService extends Object with NameToId {
   final http.BrowserClient client = new http.BrowserClient();
   final SlackCache cache = new SlackCache();
+  final EventBus eventBus;
+
   Timer cacheTimer;
 
-  SlackService() {
+  SlackService(this.eventBus) {
     bootstrapMapper();
-    refreshCache();
-    cacheTimer =
-        new Timer.periodic(new Duration(minutes: 5), (t) => refreshCache());
+    refreshCache(true);
+    cacheTimer = new Timer.periodic(
+        new Duration(minutes: 5), (t) => refreshCache(false));
   }
 
   @override
@@ -69,10 +73,14 @@ class SlackService extends Object with NameToId {
     values.forEach((value) => params.add("$parameterName=$value"));
   }
 
-  Future refreshCache() async {
+  Future refreshCache(bool firstLoad) async {
     cache.users = await fetchUsers();
     cache.channels = await fetchChannels();
     cache.emoticons = await fetchEmoticons();
+
+    if (firstLoad) {
+      eventBus.fire(new SlackDataLoadedEvent());
+    }
   }
 
   Future<Map> fetchUsers() async {
