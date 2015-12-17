@@ -11,6 +11,4 @@ import 'package:slack_history_keeper_frontend/components/search/search_component
     directives: const [ROUTER_DIRECTIVES, SearchComponent])
 @RouteConfig(
     const [const Route(path: '/', component: SearchComponent, name: 'Search')])
-class App {
-  App();
-}
+class App {}
