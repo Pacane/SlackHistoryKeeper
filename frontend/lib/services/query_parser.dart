@@ -10,7 +10,8 @@ class QueryParser {
   QueryParser(this.nameToIdConverter);
 
   Future<Query> parse(String queryString) async {
-    var expressions = queryString.split(new RegExp(r"\s+")).toSet();
+    var expressions =
+        nullToEmpty(queryString).split(new RegExp(r"\s+")).toSet();
     var channelExpressions =
         await expressions.where((String exp) => exp.startsWith('in:'));
 
