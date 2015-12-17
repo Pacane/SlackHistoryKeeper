@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 import 'package:slack_history_keeper_frontend/services/query_parser.dart';
 import 'package:mockito/mockito.dart';
-import 'dart:async';
 import 'package:slack_history_keeper_frontend/services/name_to_id_mixin.dart';
 
 class MockNameToId extends Mock implements NameToId {

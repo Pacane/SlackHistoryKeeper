@@ -16,14 +16,11 @@ const String apiUrl = 'http://localhost:8084/api';
 class SlackService extends Object with NameToId {
   final http.BrowserClient client = new http.BrowserClient();
 
-  Map<String, User> _users;
-  Map<String, Channel> _channels;
+  Map<String, User> _users = {};
+  Map<String, Channel> _channels = {};
 
   SlackService() {
-    print("ctor");
     bootstrapMapper();
-    _users = {};
-    _channels = {};
   }
 
   List<Channel> getChannels() {
@@ -35,11 +32,10 @@ class SlackService extends Object with NameToId {
   }
 
   Channel getChannelfromId(String id) => _channels[id];
-  User getUserFromId(String id) {
-    print("The cached users are $_users");
-    return _users[id];
-  }
 
+  User getUserFromId(String id) => _users[id];
+
+  @override
   String channelNameToId(String channelName) {
     var channels = getChannels();
     var channel = channels.firstWhere((Channel c) => c.name == channelName,
@@ -47,6 +43,7 @@ class SlackService extends Object with NameToId {
     return channel?.id;
   }
 
+  @override
   String userNameToId(String userName) {
     var users = getUsers();
     var user =
@@ -77,10 +74,8 @@ class SlackService extends Object with NameToId {
   }
 
   Future cacheData() async {
-    print("caching data");
     _users = await fetchUsers();
     _channels = await fetchChannels();
-    print("data cached");
   }
 
   Future<Map> fetchUsers() async {
@@ -93,8 +88,6 @@ class SlackService extends Object with NameToId {
     json
         .map((Map m) => decode(m, User))
         .forEach((User u) => association[u.id] = u);
-
-    print("The association is $association");
 
     return association;
   }

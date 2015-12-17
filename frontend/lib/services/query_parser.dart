@@ -41,15 +41,15 @@ class QueryParser {
     var query = new Query();
 
     query.keywords = emptyToNull(keywords);
-    awaitFutureParams(channelIds, query.channelIds);
-    awaitFutureParams(userIds, query.userIds);
+    filterNotNullIds(channelIds, query.channelIds);
+    filterNotNullIds(userIds, query.userIds);
 
     return query;
   }
 
-  void awaitFutureParams(Set<String> futures, List collection) {
-    for (var future in futures) {
-      if (future != null) collection.add(future);
+  void filterNotNullIds(Set<String> ids, List collection) {
+    for (var id in ids) {
+      if (id != null) collection.add(id);
     }
   }
 }
