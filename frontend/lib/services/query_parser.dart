@@ -38,17 +38,19 @@ class QueryParser {
   Future<Query> createQuery(
       String keywords, Set channelIds, Set userIds) async {
     var query = new Query();
+
     query.keywords = emptyToNull(keywords);
-
-    for (var channelId in channelIds) {
-      query.channelIds.add(await channelId);
-    }
-
-    for (var userId in userIds) {
-      query.userIds.add(await userId);
-    }
+    await awaitFutureParams(channelIds, query.channelIds);
+    await awaitFutureParams(userIds, query.userIds);
 
     return query;
+  }
+
+  Future awaitFutureParams(Set<Future> futures, List collection) async {
+    for (var future in futures) {
+      var id = await future;
+      if (id != null) collection.add(id);
+    }
   }
 }
 
