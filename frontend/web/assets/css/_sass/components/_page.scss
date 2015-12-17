@@ -8,6 +8,7 @@
 	font-size: 1.4rem;
 
 	width: 900px;
+	height: 100%;
 	min-height: 100%;
 	margin: 0 auto;
 	padding: 2em;
@@ -18,17 +19,29 @@
 }
 
 .page-holder {
-	height: calc(100vh - 180px);
+	height: 0;
 
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
 	align-content: stretch;
 	justify-content: center;
+
+	opacity: 0;
+
+	&.is-visible {
+		opacity: 1;
+
+		transition: opacity 0.75s 0.8s linear, height 0s 0.75s;
+	}
+
+	&.has-search {
+		height: calc(100vh - 180px);
+	}
 }
 
 .page-header {
-	margin-top: 0;
+	margin-top: 36vh;
 
 	transition: margin-top 0.75s ease-in-out, transform 0.75s ease;
 	transform: translate3d(0, 0, 0) scale(1);
@@ -37,6 +50,10 @@
 		width: 80px;
 		height: auto;
 		margin-bottom: 15px;
+	}
+
+	&.has-search {
+		margin-top: 0;
 	}
 
 	&.animate {
@@ -48,7 +65,7 @@
 	}
 
 	&.is-loading {
-		margin-top: calc(50% - 350px);
+		margin-top: 44vh;
 
 		-webkit-animation-play-state: running;
 		-webkit-animation-iteration-count: infinite;
@@ -57,15 +74,10 @@
 
 .page-content {
 	flex: 5;
-	opacity: 0;
-	overflow-y: scroll;
+	overflow-y: auto;
 
-	&.is-visible {
+	&.has-search {
 		height: auto;
-
-		opacity: 1;
-
-		transition: opacity 0.75s 0.8s linear, height 0s 0.75s;
 	}
 }
 

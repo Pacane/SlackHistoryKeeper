@@ -6,9 +6,9 @@ import 'package:slack_history_keeper_shared/models.dart';
 import 'dart:async';
 import 'package:slack_history_keeper_frontend/services/query_parser.dart';
 import 'package:slack_history_keeper_frontend/components/messages/messages_component.dart';
+import 'dart:html';
 
-@Component(
-    selector: 'search')
+@Component(selector: 'search')
 @View(
     templateUrl: 'search_component.html',
     directives: const [CORE_DIRECTIVES, FORM_DIRECTIVES, MessagesComponent])
@@ -23,6 +23,10 @@ class SearchComponent {
   SearchComponent(this.service, this.queryParser);
 
   Future onSubmit() async {
+    querySelector(".page-header").classes.add("has-search");
+    querySelector(".page-holder").classes.add("has-search");
+    querySelector(".page-content").classes.add("has-search");
+
     var query = await queryParser.parse(queryText);
     messages = await service.search(query);
     messages = messages.reversed;

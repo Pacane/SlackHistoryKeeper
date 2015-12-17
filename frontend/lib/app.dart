@@ -40,7 +40,7 @@ class App implements OnInit, OnDestroy {
       ..classes.remove("is-loading")
       ..on["webkitAnimationIteration"]
           .listen((e) => pageHeader.classes.remove("animate"));
-    querySelector(".page-content").classes.add("is-visible");
+    querySelector(".page-holder").classes.add("is-visible");
   }
 
   void _onSlackDataLoaded(SlackDataLoadedEvent event) {
