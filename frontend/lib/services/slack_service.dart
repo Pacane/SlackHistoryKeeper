@@ -80,19 +80,12 @@ class CachedCollection<E> {
 
   List<E> _data;
   DateTime _fetchDate = new DateTime.fromMillisecondsSinceEpoch(0);
-  Future _currentFuture;
 
   CachedCollection(this.client, this.endPoint);
 
   Future<List<E>> get data async {
     if (isExpired()) {
-      if (_currentFuture != null)
-        await _currentFuture;
-      else {
-        _currentFuture = forceFetch();
-        await _currentFuture;
-        _currentFuture = null;
-      }
+      await forceFetch();
     }
 
     return _data;
