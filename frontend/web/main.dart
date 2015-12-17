@@ -8,12 +8,18 @@ import 'package:slack_history_keeper_frontend/app.dart';
 import 'package:slack_history_keeper_frontend/services/slack_service.dart';
 import 'package:slack_history_keeper_frontend/services/name_to_id_mixin.dart';
 import 'package:slack_history_keeper_frontend/services/query_parser.dart';
+import 'package:slack_history_keeper_frontend/services/message_parser.dart';
 
-Future<ComponentRef> main() => bootstrap(App, [
-      ROUTER_BINDINGS,
-      provide(APP_BASE_HREF, useValue: '/'),
-      provide(LocationStrategy, useClass: HashLocationStrategy),
-      SlackService,
-      provide(NameToId, useExisting: SlackService),
-      QueryParser
-    ]);
+Future<ComponentRef> main() => bootstrap(
+    App,
+    [
+      [
+        ROUTER_BINDINGS,
+        provide(APP_BASE_HREF, useValue: '/'),
+        provide(LocationStrategy, useClass: HashLocationStrategy),
+        SlackService,
+        provide(NameToId, useExisting: SlackService),
+        QueryParser
+      ],
+      parserBindings
+    ].expand((i) => i).toList());
