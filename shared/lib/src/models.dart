@@ -126,3 +126,8 @@ class Message {
     return '$parsedDateTime:$userId:$text$sb';
   }
 }
+
+class SuperEvent {
+  List<Message> data;
+  SuperEvent(this.data);
+}

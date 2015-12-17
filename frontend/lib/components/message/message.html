@@ -1,10 +1,10 @@
 <article class="message">
     <div class="message__content">
         <header class="message__header">
-            <h1 class="message__header__title">jason</h1>
-            <p class="message__header__time"><time pubdate datetime="2009-10-10T19:10-08:00">~1 hour ago</time></p>
+            <h1 class="message__header__title">{{ message.userId }}</h1>
+            <p class="message__header__time"><time pubdate datetime="2009-10-10T19:10-08:00">{{ message.timestamp }}</time></p>
         </header>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores consequuntur placeat quasi officia voluptas natus, cupiditate sunt consectetur amet soluta eveniet corrupti ex ipsam iste repellat libero hic? Ex, neque.</p>
+        <p>{{ message.text }}</p>
     </div>
     <div class="message__avatar">
         <img src="/assets/img/avatar.png" alt="jason">

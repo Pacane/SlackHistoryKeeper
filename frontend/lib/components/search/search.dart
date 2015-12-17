@@ -6,6 +6,7 @@ import 'package:slack_history_keeper_shared/models.dart';
 import 'dart:async';
 import 'package:slack_history_keeper_frontend/services/query_parser.dart';
 import 'package:slack_history_keeper_frontend/components/messages/messages.dart';
+import 'package:event_bus/event_bus.dart';
 
 @Component(
     selector: 'search',
@@ -16,11 +17,12 @@ import 'package:slack_history_keeper_frontend/components/messages/messages.dart'
 class Search implements OnInit {
   final SlackService service;
   final QueryParser queryParser;
+  final EventBus eventBus;
   List<Channel> channels = [];
   Channel channel;
   String queryText;
 
-  Search(this.service, this.queryParser);
+  Search(this.service, this.queryParser, this.eventBus);
 
   @override
   Future ngOnInit() async {
@@ -34,10 +36,6 @@ class Search implements OnInit {
 
     List<Message> data = await service.search(query);
 
-    Messages.showMessages(data);
-
-    for(var message in data) {
-      print(message);
-    }
+    eventBus.fire(new SuperEvent(data));
   }
 }
