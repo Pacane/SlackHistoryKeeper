@@ -16,6 +16,10 @@
 	min-height: 100%;
 	margin: 0 auto;
 	padding: 2em;
+
+	@media (max-width: 899px) {
+		width: 100%;
+	}
 }
 
 .page-header {

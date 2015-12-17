@@ -13,6 +13,7 @@
 		font-size: 1.3rem;
 		text-align: left;
 
+		flex-basis: 90%;
 		order: 2;
 		padding-right: 12px;
 	}
@@ -42,6 +43,6 @@
 
 	&__avatar {
 		order: 1;
-		flex-basis: 100px;
+		flex-basis: 55px;
 	}
 }

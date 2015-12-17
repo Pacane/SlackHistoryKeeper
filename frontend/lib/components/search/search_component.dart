@@ -25,5 +25,6 @@ class SearchComponent {
   Future onSubmit() async {
     var query = await queryParser.parse(queryText);
     messages = await service.search(query);
+    messages = messages.reversed;
   }
 }

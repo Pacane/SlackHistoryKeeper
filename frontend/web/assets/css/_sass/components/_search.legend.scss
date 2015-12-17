@@ -1,0 +1,32 @@
+/**
+ * SEARCH LEGEND
+ * components/search.legend.scss
+ */
+
+.search-legend {
+  &__term,
+  &__definition {
+    color: $c-text--light;
+
+    display: inline-block;
+  }
+
+  &__term {
+    @include font(bold);
+  }
+
+  &__definition {
+    font-style: italic;
+
+    margin-right: 15px;
+    margin-bottom: 5px;
+  }
+
+  &__break {
+    display: none;
+
+    @media (max-width: 520px) {
+      display: block;
+    }
+  }
+}
