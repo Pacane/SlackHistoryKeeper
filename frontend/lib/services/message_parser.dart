@@ -31,8 +31,7 @@ class MentionSyntax extends InlineSyntax {
   bool onMatch(InlineParser parser, Match match) {
     var userId = match.group(1);
     var user = slackService.getUserFromId(userId);
-    var anchor = new Element.text('a', '@' + user.name);
-    anchor.attributes['href'] = "http://google.ca";
+    var anchor = new Element.text('strong', '@' + user.name);
 
     parser.addNode(anchor);
     return true;
