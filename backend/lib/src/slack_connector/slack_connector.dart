@@ -5,6 +5,10 @@ import 'package:slack_history_keeper_shared/models.dart';
 import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
 
 class SlackConnector {
+  final SlackCache cache;
+
+  SlackConnector(this.cache);
+
   Future<List<User>> fetchUsers() async {
     String url =
         'https://slack.com/api/users.list?token=$slackApiToken&pretty=1';
@@ -13,6 +17,10 @@ class SlackConnector {
     Map json = JSON.decode(response.body);
     List<Map> membersJson = json['members'];
     var members = membersJson.map((Map map) => new User.fromJson(map)).toList();
+
+    Map<String, User> usersCache = {};
+    members.forEach((User u) => usersCache[u.id] = u);
+    cache.users = usersCache;
 
     return members;
   }
@@ -92,6 +100,10 @@ class SlackConnector {
 
     var channels =
         channelsJson.map((Map map) => new Channel.fromJson(map)).toList();
+
+    Map<String, Channel> channelsCache = {};
+    channels.forEach((Channel c) => channelsCache[c.id] = c);
+    cache.channels = channelsCache;
 
     return channels;
   }

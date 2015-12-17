@@ -8,7 +8,7 @@ class ChannelsGroup {
 
   @app.DefaultRoute(responseType: 'application/json')
   @Encode()
-  Future<List<Channel>> getChannels() {
-    return channelsService.fetchChannelsFromSlackApi();
+  List<Channel> getChannels() {
+    return channelsService.getChannels();
   }
 }

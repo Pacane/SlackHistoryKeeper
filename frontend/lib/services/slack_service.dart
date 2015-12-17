@@ -15,29 +15,19 @@ const String apiUrl = 'http://localhost:8084/api';
 @Injectable()
 class SlackService extends Object with NameToId {
   final http.BrowserClient client = new http.BrowserClient();
-
-  Map<String, User> _users = {};
-  Map<String, Channel> _channels = {};
+  final SlackCache cache = new SlackCache();
+  Timer cacheTimer;
 
   SlackService() {
     bootstrapMapper();
+    refreshCache();
+    cacheTimer =
+        new Timer.periodic(new Duration(minutes: 5), (t) => refreshCache());
   }
-
-  List<Channel> getChannels() {
-    return _channels.values;
-  }
-
-  List<User> getUsers() {
-    return _users.values;
-  }
-
-  Channel getChannelfromId(String id) => _channels[id];
-
-  User getUserFromId(String id) => _users[id];
 
   @override
   String channelNameToId(String channelName) {
-    var channels = getChannels();
+    var channels = cache.getChannels();
     var channel = channels.firstWhere((Channel c) => c.name == channelName,
         orElse: () => null);
     return channel?.id;
@@ -45,11 +35,15 @@ class SlackService extends Object with NameToId {
 
   @override
   String userNameToId(String userName) {
-    var users = getUsers();
+    var users = cache.getUsers();
     var user =
         users.firstWhere((User u) => u.name == userName, orElse: () => null);
     return user?.id;
   }
+
+  Channel getChannelfromId(String id) => cache.getChannelfromId(id);
+
+  User getUserFromId(String id) => cache.getUserFromId(id);
 
   Future<List<Message>> search(qp.Query searchQuery) async {
     List<String> params = [];
@@ -73,9 +67,9 @@ class SlackService extends Object with NameToId {
     values.forEach((value) => params.add("$parameterName=$value"));
   }
 
-  Future cacheData() async {
-    _users = await fetchUsers();
-    _channels = await fetchChannels();
+  Future refreshCache() async {
+    cache.users = await fetchUsers();
+    cache.channels = await fetchChannels();
   }
 
   Future<Map> fetchUsers() async {

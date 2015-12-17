@@ -11,7 +11,7 @@ import 'package:slack_history_keeper_shared/models.dart';
 void main() {
   slackApiToken = 'xoxp-10922254176-10918404932-10925301090-9127fdfa6d';
 
-  var connector = new SlackConnector();
+  var connector = new SlackConnector(new SlackCache());
 
   test('slack api token is specified', () {
     expect(slackApiToken, isNotNull);

@@ -16,6 +16,7 @@ import 'package:slack_history_keeper_backend/src/channel_repository.dart';
 import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
 import 'package:slack_history_keeper_backend/src/polling_daemon.dart';
 import 'package:slack_history_keeper_backend/src/slack_connector/slack_connector.dart';
+import 'package:slack_history_keeper_shared/models.dart';
 
 String slackApiToken;
 String databaseUri;
@@ -30,7 +31,8 @@ Module databaseModule = new Module()
 
 Module pollingDaemonModule = new Module()
   ..bind(PollingDaemon)
-  ..bind(SlackConnector);
+  ..bind(SlackConnector)
+  ..bind(SlackCache);
 
 ModuleInjector injector =
     new ModuleInjector([pollingDaemonModule, repositoryModule, databaseModule]);

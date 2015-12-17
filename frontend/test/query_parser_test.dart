@@ -3,9 +3,7 @@ import 'package:slack_history_keeper_frontend/services/query_parser.dart';
 import 'package:mockito/mockito.dart';
 import 'package:slack_history_keeper_frontend/services/name_to_id_mixin.dart';
 
-class MockNameToId extends Mock implements NameToId {
-  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
+class MockNameToId extends Mock implements NameToId {}
 
 void main() {
   var nameToIdConverter = new MockNameToId();
@@ -16,8 +14,7 @@ void main() {
     var query = 'in:$channelName';
     var generalId = '1234';
 
-    when(nameToIdConverter.channelNameToId(channelName))
-        .thenReturn(generalId);
+    when(nameToIdConverter.channelNameToId(channelName)).thenReturn(generalId);
 
     var result = await parser.parse(query);
 
@@ -50,8 +47,7 @@ void main() {
     var query = 'from:$userName';
     var generalId = '1234';
 
-    when(nameToIdConverter.userNameToId(userName))
-        .thenReturn(generalId);
+    when(nameToIdConverter.userNameToId(userName)).thenReturn(generalId);
 
     var result = await parser.parse(query);
 
@@ -67,10 +63,8 @@ void main() {
     var user2Id = '4567';
     var query = 'from:$user1Name from:$user2Name';
 
-    when(nameToIdConverter.userNameToId(user1Name))
-        .thenReturn(user1Id);
-    when(nameToIdConverter.userNameToId(user2Name))
-        .thenReturn(user2Id);
+    when(nameToIdConverter.userNameToId(user1Name)).thenReturn(user1Id);
+    when(nameToIdConverter.userNameToId(user2Name)).thenReturn(user2Id);
 
     var result = await parser.parse(query);
 
