@@ -1,6 +1,7 @@
 library frontend.components.message;
 
 import 'package:angular2/angular2.dart';
+import 'package:intl/intl.dart';
 import 'package:slack_history_keeper_frontend/services/slack_service.dart';
 import 'package:slack_history_keeper_shared/models.dart';
 import 'package:slack_history_keeper_frontend/services/message_parser.dart';
@@ -14,6 +15,8 @@ class MessageComponent implements OnInit {
   @Input()
   Message message;
   User user;
+  Channel channel;
+  String formattedDate;
 
   final SlackService slackService;
 
@@ -22,5 +25,9 @@ class MessageComponent implements OnInit {
   @override
   void ngOnInit() {
     user = slackService.getUserFromId(message.userId);
+    channel = slackService.getChannelfromId(message.channelId);
+    var formatter = new DateFormat('yyyy-MM-dd H:mm');
+    formattedDate = formatter.format(new DateTime.fromMillisecondsSinceEpoch(
+        num.parse(message.timestamp.split(".")[0]) * 1000));
   }
 }

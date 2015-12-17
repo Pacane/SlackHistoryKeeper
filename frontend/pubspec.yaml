@@ -13,6 +13,7 @@ dependencies:
   konami_code: "^1.2.0+2"
   slack_history_keeper_shared:
     path: ../shared
+  event_bus: "^0.4.1"
 dependency_overrides:
   redstone_mapper:
     git: https://github.com/redstone-dart/redstone_mapper.git

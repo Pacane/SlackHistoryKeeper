@@ -64,6 +64,7 @@ class PollingDaemon {
    */
   Future poll() async {
     slackConnector.fetchUsers();
+    slackConnector.fetchEmoticons();
     channels = await slackConnector.fetchChannels();
     filterChannelsToPoll();
 
