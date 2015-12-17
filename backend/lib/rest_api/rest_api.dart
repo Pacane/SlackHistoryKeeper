@@ -9,10 +9,12 @@ import 'package:shelf/shelf.dart';
 import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
 import 'package:slack_history_keeper_shared/models.dart';
 import 'package:slack_history_keeper_backend/src/services/users_service.dart';
+import 'package:slack_history_keeper_backend/src/services/emoticons_service.dart';
 
 part 'groups/channels_group.dart';
 part 'groups/messages_group.dart';
 part 'groups/users_group.dart';
+part 'groups/emoticons_group.dart';
 part 'interceptors/cors_interceptor.dart';
 
 const String baseUrl = '/api';
@@ -27,6 +29,7 @@ Future startApiServer() async {
     ..bind(ChannelsService)
     ..bind(UsersService)
     ..bind(MessagesService)
+    ..bind(EmoticonsService)
     ..bind(SlackCache, toValue: injector.get(SlackCache)));
 
   app.start(port: port);
