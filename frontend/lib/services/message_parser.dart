@@ -12,7 +12,14 @@ class MessageParser implements PipeTransform {
   List<TextSyntax> inlineSyntaxes = [];
 
   MessageParser(MentionSyntax mentionSyntax, EmoticonSyntax emoticonSyntax) {
-    inlineSyntaxes = [mentionSyntax, emoticonSyntax];
+    inlineSyntaxes = [
+      new TagSyntax(r'\*\*', tag: 'strong'),
+      new TagSyntax(r'\*', tag: 'strong'),
+      new TagSyntax(r'\~', tag: 'strike'),
+      new TagSyntax(r'\b__', tag: 'em', end: r'__\b'),
+      mentionSyntax,
+      emoticonSyntax
+    ];
   }
 
   @override
@@ -40,7 +47,7 @@ class MentionSyntax extends InlineSyntax {
 
 @Injectable()
 class EmoticonSyntax extends InlineSyntax {
-  static const emojisUrl =
+  static const String emojisUrl =
       'https://raw.githubusercontent.com/arvida/emoji-cheat-sheet.com/master/public/graphics/emojis';
   final SlackService slackService;
 
@@ -62,7 +69,7 @@ class EmoticonSyntax extends InlineSyntax {
     return true;
   }
 
-  createEmoticonImage(Emoticon emoticon, String name) {
+  Element createEmoticonImage(Emoticon emoticon, String name) {
     var img = new Element.withTag('img');
     if (emoticon != null) {
       img.attributes['src'] = emoticon.url;
