@@ -1,13 +1,11 @@
 library frontend.components.message;
 
 import 'package:angular2/angular2.dart';
-import 'package:slack_history_keeper_shared/models.dart' as models;
+import 'package:slack_history_keeper_shared/models.dart';
 
 @Component(selector: 'message')
 @View(templateUrl: 'message.html')
-class Message {
+class MessageComponent {
   @Input()
-  models.Message message;
-
-  Message();
+  Message message;
 }
