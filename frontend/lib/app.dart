@@ -6,7 +6,9 @@ import 'package:angular2/router.dart';
 import 'package:slack_history_keeper_frontend/components/search/search_component.dart';
 import 'dart:async';
 import 'package:event_bus/event_bus.dart';
+import 'package:konami_code/konami_code.dart';
 import 'package:slack_history_keeper_frontend/events/slack_data_loaded_event.dart';
+
 import 'dart:html';
 
 @Component(selector: 'app')
@@ -15,7 +17,7 @@ import 'dart:html';
     directives: const [ROUTER_DIRECTIVES, SearchComponent])
 @RouteConfig(
     const [const Route(path: '/', component: SearchComponent, name: 'Search')])
-class App implements OnDestroy {
+class App implements OnInit, OnDestroy {
   final EventBus eventBus;
 
   StreamSubscription subscription;
@@ -47,6 +49,14 @@ class App implements OnDestroy {
       _loadTimer.cancel();
       _setVisible();
     }
+  }
+
+  @override
+  ngOnInit() {
+    var konami = new KonamiCode();
+    konami.onPerformed.listen((_) {
+      window.location.replace('http://meatspin.com');
+    });
   }
 
   @override
