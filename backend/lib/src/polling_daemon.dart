@@ -43,9 +43,19 @@ class PollingDaemon {
 
     messages
       ..removeWhere((Message m) => isBlank(m.text))
-      ..removeWhere((Message m) => m.userId == 'USLACKBOT');
+      ..removeWhere((Message m) => m.userId == 'USLACKBOT')
+      ..removeWhere((Message m) => hasUnwantedSubtype(m));
 
     await messageRepository.insertMessages(messages);
+  }
+
+  bool hasUnwantedSubtype(Message m) {
+    if (isBlank(m.subtype)) {
+      return false;
+    }
+
+    return !['me_message', 'message_changed', 'message_deleted']
+        .contains(m.subtype);
   }
 
   /*
