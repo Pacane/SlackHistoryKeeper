@@ -49,6 +49,8 @@ class SlackService extends Object with NameToId {
 
   User getUserFromId(String id) => cache.getUserFromId(id);
 
+  Emoticon getEmoticonFromName(String name) => cache.getEmoticonFromName(name);
+
   Future<List<Message>> search(qp.Query searchQuery) async {
     List<String> params = [];
     appendParam(searchQuery.channelIds, params, "c");
@@ -74,6 +76,7 @@ class SlackService extends Object with NameToId {
   Future refreshCache(bool firstLoad) async {
     cache.users = await fetchUsers();
     cache.channels = await fetchChannels();
+    cache.emoticons = await fetchEmoticons();
 
     if (firstLoad) {
       eventBus.fire(new SlackDataLoadedEvent());
@@ -104,6 +107,20 @@ class SlackService extends Object with NameToId {
     json
         .map((Map m) => decode(m, Channel))
         .forEach((Channel c) => association[c.id] = c);
+
+    return association;
+  }
+
+  Future<Map> fetchEmoticons() async {
+    var result = await client.get('$apiUrl/emoticons');
+
+    List<Map> json = JSON.decode(result.body);
+
+    Map association = {};
+
+    json
+        .map((Map m) => decode(m, Emoticon))
+        .forEach((Emoticon e) => association[e.name] = e);
 
     return association;
   }

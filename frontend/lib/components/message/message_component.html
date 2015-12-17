@@ -1,8 +1,8 @@
 <article class="message">
     <div class="message__content">
         <header class="message__header">
-            <h1 class="message__header__title">{{user?.name}}</h1>
-            <p class="message__header__time"><time pubdate datetime="2009-10-10T19:10-08:00">{{message.timestamp}}</time></p>
+            <h1 class="message__header__title">@{{user?.name}} <span>in</span> #{{channel?.name}}</h1>
+            <p class="message__header__time"><time pubdate datetime="2009-10-10T19:10-08:00">{{formattedDate}}</time></p>
         </header>
         <p [innerHtml]="message.text | messageParser"></p>
     </div>

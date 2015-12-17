@@ -127,12 +127,27 @@ class Message {
   }
 }
 
+class Emoticon {
+  @Field()
+  String name;
+  @Field()
+  String url;
+
+  Emoticon();
+  Emoticon.data(this.name, this.url);
+}
+
 class SlackCache {
   Map<String, User> _users = {};
   Map<String, Channel> _channels = {};
+  Map<String, Emoticon> _emoticons = {};
 
   List<Channel> getChannels() {
     return _channels.values.toList();
+  }
+
+  List<Emoticon> getEmoticons() {
+    return _emoticons.values.toList();
   }
 
   List<User> getUsers() {
@@ -143,11 +158,17 @@ class SlackCache {
 
   User getUserFromId(String id) => _users[id];
 
+  Emoticon getEmoticonFromName(String name) => _emoticons[name];
+
   void set users(Map<String, User> users) {
     _users = users;
   }
 
   void set channels(Map<String, Channel> channels) {
     _channels = channels;
+  }
+
+  void set emoticons(Map<String, Emoticon> emoticons) {
+    _emoticons = emoticons;
   }
 }
