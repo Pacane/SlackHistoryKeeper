@@ -38,12 +38,14 @@ class App implements OnInit, OnDestroy {
     var pageHeader = querySelector(".page-header");
     pageHeader
       ..classes.remove("is-loading")
-      ..on["webkitAnimationIteration"]
-          .listen((e) => pageHeader.classes.remove("animate"))
-      ..on["animationiteration"]
-          .listen((e) => pageHeader.classes.remove("animate"));
-    ;
+      ..on["webkitAnimationIteration"].listen((e) => _removeAnimate(pageHeader))
+      ..on["animationiteration"].listen((e) => _removeAnimate(pageHeader));
+
     querySelector(".page-holder").classes.add("is-visible");
+  }
+
+  void _removeAnimate(dynamic pageHeader) {
+    pageHeader.classes.remove("animate");
   }
 
   void _onSlackDataLoaded(SlackDataLoadedEvent event) {
