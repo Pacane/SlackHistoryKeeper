@@ -19,6 +19,7 @@ class Search implements OnInit {
   List<Channel> channels = [];
   Channel channel;
   String queryText;
+  List<Message> messages;
 
   Search(this.service, this.queryParser);
 
@@ -32,11 +33,9 @@ class Search implements OnInit {
   Future onSubmit() async {
     var query = await queryParser.parse(queryText);
 
-    List<Message> data = await service.search(query);
+    messages = await service.search(query);
 
-    Messages.showMessages(data);
-
-    for(var message in data) {
+    for(var message in messages) {
       print(message);
     }
   }

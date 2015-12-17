@@ -1,15 +1,14 @@
 library frontend.components.messages;
 
 import 'package:angular2/angular2.dart';
+import 'package:slack_history_keeper_frontend/components/message/message.dart';
+import 'package:slack_history_keeper_shared/models.dart' as models;
 
 @Component(selector: 'messages')
-@View(templateUrl: 'messages.html', directives: const [NgFor, NgIf])
+@View(templateUrl: 'messages.html', directives: const [NgFor, NgIf, Message])
 class Messages {
-    static List<String> messages;
-    get data => Messages.messages;
-    Messages() {}
+  @Input()
+  List<models.Message> messages;
 
-    static showMessages(data) {
-        messages = data;
-    }
+  Messages();
 }
