@@ -37,6 +37,8 @@
 
 	&.has-search {
 		height: calc(100vh - 180px);
+
+		transition: height 1s ease-in-out;
 	}
 }
 
