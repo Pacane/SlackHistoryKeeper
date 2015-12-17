@@ -34,9 +34,5 @@ class Search implements OnInit {
     var query = await queryParser.parse(queryText);
 
     messages = await service.search(query);
-
-    for(var message in messages) {
-      print(message);
-    }
   }
 }
