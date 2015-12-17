@@ -17,7 +17,7 @@ void main() {
     List<String> unwantedSubtypes = [
       'bot_message',
       'channel_join',
-      'channev 4l_leave',
+      'channel_leave',
       'channel_topic',
       'channel_purpose',
       'channel_name',
