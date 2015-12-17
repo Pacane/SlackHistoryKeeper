@@ -55,6 +55,8 @@
 	height: 0;
 
 	&.is-visible {
+		height: auto;
+
 		opacity: 1;
 
 		transition: opacity 0.75s 0.8s linear, height 0s 0.75s;
