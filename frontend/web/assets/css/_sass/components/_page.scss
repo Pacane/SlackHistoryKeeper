@@ -5,12 +5,7 @@
 
 .page {
 	text-align: center;
-	
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-  	align-content: stretch;
-	justify-content: center;
+	font-size: 1.4rem;
 
 	width: 900px;
 	min-height: 100%;
@@ -20,6 +15,16 @@
 	@media (max-width: 899px) {
 		width: 100%;
 	}
+}
+
+.page-holder {
+	height: calc(100vh - 180px);
+
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	align-content: stretch;
+	justify-content: center;
 }
 
 .page-header {
@@ -51,8 +56,9 @@
 }
 
 .page-content {
+	flex: 5;
 	opacity: 0;
-	height: 0;
+	overflow-y: scroll;
 
 	&.is-visible {
 		height: auto;
@@ -61,6 +67,10 @@
 
 		transition: opacity 0.75s 0.8s linear, height 0s 0.75s;
 	}
+}
+
+.page-footer {
+	flex: 1;
 }
 
 @-webkit-keyframes pulse {
