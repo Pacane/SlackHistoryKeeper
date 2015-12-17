@@ -41,7 +41,9 @@ class PollingDaemon {
           lastTimestamp: lastTimeStampToFetch);
     }
 
-    messages.removeWhere((Message m) => isBlank(m.text));
+    messages
+      ..removeWhere((Message m) => isBlank(m.text))
+      ..removeWhere((Message m) => m.userId == 'USLACKBOT');
 
     await messageRepository.insertMessages(messages);
   }

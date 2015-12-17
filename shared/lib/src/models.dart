@@ -40,7 +40,7 @@ class User {
   User.fromJson(Map json) {
     id = json['id'];
     name = json['name'];
-    avatar = json['profile']['image_72'];
+    avatar = json['profile']['image_32'];
   }
 
   bool operator ==(User o) => o is User && o.name == name && o.id == id;
