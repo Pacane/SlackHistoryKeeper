@@ -2,9 +2,9 @@ import 'package:angular2/angular2.dart';
 import 'package:angular2/core.dart' show Pipe;
 import 'package:markdown/markdown.dart';
 import 'package:slack_history_keeper_frontend/services/slack_service.dart';
-import 'package:slack_history_keeper_shared/src/models.dart';
+import 'package:slack_history_keeper_shared/models.dart';
 
-const parserBindings = const [MessageParser, MentionSyntax, EmoticonSyntax];
+const List parserBindings = const [MessageParser, MentionSyntax, EmoticonSyntax];
 
 @Pipe(name: 'messageParser', pure: true)
 @Injectable()

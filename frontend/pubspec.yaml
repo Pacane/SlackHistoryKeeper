@@ -10,13 +10,12 @@ dependencies:
   http: "^0.11.3+2"
   sass: '^0.4.2'
   markdown: "^0.9.0"
-  konami_code: "^1.2.0+2"
   slack_history_keeper_shared:
     path: ../shared
   event_bus: "^0.4.1"
 dependency_overrides:
   redstone_mapper:
-    git: https://github.com/redstone-dart/redstone_mapper.git
+    path: /home/joel/code/dart/redstone_mapper
   redstone_mapper_mongo:
     git: https://github.com/redstone-dart/redstone_mapper_mongo.git
   code_transformers: 0.3.1
@@ -29,3 +28,4 @@ transformers:
       entry_points: web/main.dart
   - sass:
       style: compact
+  - redstone_mapper
