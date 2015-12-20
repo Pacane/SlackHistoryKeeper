@@ -102,6 +102,7 @@ class Message {
     userId = json['user'];
     text = json['text'];
     subtype = json['subtype'];
+    channelId = json['channelId'];
 
 //    if (json['attachments'] != null && subtype != 'bot_message') {
 //      List<Map> jsonAttachments = json['attachments'];
@@ -118,6 +119,7 @@ class Message {
     json['text'] = text;
     json['subtype'] = subtype;
     json['ts'] = timestamp;
+    json['channelId'] = channelId;
 
 //    json['attachments'] = JSON.encode(attachments);
 

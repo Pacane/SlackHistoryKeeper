@@ -59,9 +59,14 @@ class SlackService extends Object with NameToId {
 
     var result = await client.get('$apiUrl/messages?${params.join('&')}');
 
-    List<Map> json = JSON.decode(result.body);
+    var json = JSON.decode(result.body);
 
-    var list = json.map((Map m) => new Message.fromJson(m)).toList();
+    var list = json.map((s) {
+      var decoded = JSON.decode(s);
+      var a = new Message.fromJson(decoded);
+      return a;
+    }).toList();
+
     return list;
   }
 
