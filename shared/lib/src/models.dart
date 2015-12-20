@@ -103,13 +103,13 @@ class Message {
     text = json['text'];
     subtype = json['subtype'];
 
-    if (json['attachments'] != null) {
-      List<Map> jsonAttachments = json['attachments'];
-      attachments =
-          jsonAttachments.map((Map m) => new Attachment.fromJson(m)).toList();
-    } else {
-      attachments = [];
-    }
+//    if (json['attachments'] != null && subtype != 'bot_message') {
+//      List<Map> jsonAttachments = json['attachments'];
+//      attachments =
+//          jsonAttachments.map((Map m) => new Attachment.fromJson(m)).toList();
+//    } else {
+//      attachments = [];
+//    }
   }
 
   Map toJson() {
@@ -117,8 +117,9 @@ class Message {
     json['user'] = userId;
     json['text'] = text;
     json['subtype'] = subtype;
+    json['ts'] = timestamp;
 
-    json['attachments'] = JSON.encode(attachments);
+//    json['attachments'] = JSON.encode(attachments);
 
     return json;
   }
@@ -131,10 +132,10 @@ class Message {
 
     StringBuffer sb = new StringBuffer();
 
-    if (attachments.isNotEmpty) {
-      sb.write(":");
-      attachments.forEach((Attachment a) => sb.write(" << ${a.fromUrl} >>"));
-    }
+//    if (attachments.isNotEmpty) {
+//      sb.write(":");
+//      attachments.forEach((Attachment a) => sb.write(" << ${a.fromUrl} >>"));
+//    }
 
     return '$parsedDateTime:$userId:$text$sb';
   }
