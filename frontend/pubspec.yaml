@@ -13,6 +13,7 @@ dependencies:
   slack_history_keeper_shared:
     path: ../shared
   event_bus: "^0.4.1"
+  script_inliner: "^1.0.0"
 dependency_overrides:
   redstone_mapper:
     git: https://github.com/redstone-dart/redstone_mapper.git
@@ -31,3 +32,4 @@ transformers:
   - $dart2js:
       minify: true
       commandLineOptions: [--dump-info]
+  - script_inliner
