@@ -1,14 +1,8 @@
 import 'package:quiver/core.dart';
-import 'package:redstone_mapper_mongo/metadata.dart';
-import 'package:redstone_mapper/mapper.dart';
+import 'dart:convert';
 
 class Channel {
-  @Id()
-  String internalId;
-
-  @Field()
   String id;
-  @Field()
   String name;
 
   Channel();
@@ -18,6 +12,14 @@ class Channel {
     name = json['name'];
   }
 
+  Map toJson() {
+    Map json = {};
+    json['id'] = id;
+    json['name'] = name;
+
+    return json;
+  }
+
   bool operator ==(Channel o) => o is Channel && o.name == name && o.id == id;
   int get hashCode => hash2(id.hashCode, name.hashCode);
 
@@ -25,14 +27,8 @@ class Channel {
 }
 
 class User {
-  @Id()
-  String internalId;
-
-  @Field()
   String id;
-  @Field()
   String name;
-  @Field()
   String avatar;
 
   User();
@@ -40,7 +36,22 @@ class User {
   User.fromJson(Map json) {
     id = json['id'];
     name = json['name'];
+    avatar = json['avatar'];
+  }
+
+  User.fromSlackJson(Map json) {
+    id = json['id'];
+    name = json['name'];
     avatar = json['profile']['image_32'];
+  }
+
+  Map toJson() {
+    Map json = {};
+    json['id'] = id;
+    json['name'] = name;
+    json['avatar'] = avatar;
+
+    return json;
   }
 
   bool operator ==(User o) => o is User && o.name == name && o.id == id;
@@ -50,14 +61,8 @@ class User {
 }
 
 class Attachment {
-  @Id()
-  String internalId;
-
-  @Field()
   int id;
-  @Field()
   String fromUrl;
-  @Field()
   String imageUrl;
 
   Attachment();
@@ -67,30 +72,27 @@ class Attachment {
     fromUrl = json['from_url'];
     imageUrl = json['image_url'];
   }
+
+  Map toJson() {
+    Map json = {};
+    json['id'] = id;
+    json['fromUrl'] = fromUrl;
+    json['imageUrl'] = imageUrl;
+
+    return json;
+  }
 }
 
 class Message {
   static const String type = 'message';
 
-  @Id()
-  String internalId;
-
-  @Field()
-  String id;
-  @Field()
   String userId;
-  @Field()
   String subtype;
-  @Field()
   String timestamp;
-  @Field()
   String text;
-  @Field()
   String channelId;
-  @Field()
   num score;
 
-  @Field()
   List<Attachment> attachments;
 
   Message();
@@ -108,6 +110,17 @@ class Message {
     } else {
       attachments = [];
     }
+  }
+
+  Map toJson() {
+    Map json = {};
+    json['user'] = userId;
+    json['text'] = text;
+    json['subtype'] = subtype;
+
+    json['attachments'] = JSON.encode(attachments);
+
+    return json;
   }
 
   String toString() {
@@ -128,13 +141,24 @@ class Message {
 }
 
 class Emoticon {
-  @Field()
   String name;
-  @Field()
   String url;
 
   Emoticon();
   Emoticon.data(this.name, this.url);
+
+  Emoticon.fromJson(Map json) {
+    name = json['name'];
+    url = json['url'];
+  }
+
+  Map toJson() {
+    Map json = {};
+    json['name'] = name;
+    json['url'] = url;
+
+    return json;
+  }
 }
 
 class SlackCache {

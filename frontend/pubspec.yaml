@@ -28,4 +28,6 @@ transformers:
       entry_points: web/main.dart
   - sass:
       style: compact
-  - redstone_mapper
+  - $dart2js:
+      minify: true
+      commandLineOptions: [--dump-info]

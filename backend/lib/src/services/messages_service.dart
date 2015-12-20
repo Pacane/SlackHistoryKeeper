@@ -8,7 +8,9 @@ import 'package:di/di.dart';
 class MessagesService {
   final MessageRepository messageRepository;
 
-  MessagesService(this.messageRepository);
+  MessagesService(this.messageRepository) {
+    messageRepository.createIndexOnText();
+  }
 
   Future<List<Message>> fetchMessages(
           String query, List<String> channelIds, List<String> userId) =>

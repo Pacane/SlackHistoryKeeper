@@ -7,8 +7,7 @@ class UsersGroup {
   UsersGroup(this.usersService);
 
   @app.DefaultRoute()
-  @Encode()
   List<User> getUsers() {
-    return usersService.getUsers();
+    return usersService.getUsers().map((User u) => JSON.encode(u)).toList();
   }
 }

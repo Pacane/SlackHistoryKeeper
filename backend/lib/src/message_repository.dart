@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:connection_pool/connection_pool.dart';
 import 'package:di/di.dart';
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:redstone_mapper/mapper.dart';
-import 'package:redstone_mapper/mapper_factory.dart';
 import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
 import 'package:slack_history_keeper_shared/models.dart';
 import 'package:quiver/strings.dart';
@@ -17,18 +15,18 @@ class MessageRepository {
 
   Future<Db> getConnection() async => connection.conn;
 
-  MessageRepository(this.connectionPool) {
-    bootstrapMapper();
-  }
+  MessageRepository(this.connectionPool);
 
   Future<List<Message>> fetchMessages(
       {List<String> channelIds: const [], List<String> userIds: const []}) {
     return executeWrappedCommand((Db db) async {
-      List<Message> messages = await db
+      List<Map> maps = await db
           .collection("messages")
           .find(where..sortBy("timestamp", descending: true))
-          .map((Map m) => decode(m, Message))
           .toList();
+
+      List<Message> messages =
+          maps.map((Map m) => new Message.fromJson(m)).toList();
 
       return messages;
     });
@@ -47,13 +45,9 @@ class MessageRepository {
       if (channelIds.isNotEmpty) query = query.oneFrom("channelId", channelIds);
       if (userIds.isNotEmpty) query = query.oneFrom("userId", userIds);
 
-      List<Map> messages = await db
-          .collection("messages")
-          .find(query)
-          .map((Map m) => decode(m, Message))
-          .toList();
+      List<Map> messages = await db.collection("messages").find(query).toList();
 
-      return messages;
+      return messages.map((Map m) => new Message.fromJson(m)).toList();
     });
   }
 
@@ -62,7 +56,7 @@ class MessageRepository {
       Map fetched = await db.collection("messages").findOne(where
           .sortBy('timestamp', descending: true)
           .eq("channelId", channelId));
-      return decode(fetched, Message);
+      return fetched == null ? null : new Message.fromJson(fetched);
     });
   }
 
@@ -73,7 +67,7 @@ class MessageRepository {
 
     return executeWrappedCommand((Db db) async {
       return db.collection("messages").insertAll(
-          messages.map((Message m) => encode(m)).toList(),
+          messages.map((Message m) => m.toJson()).toList(),
           writeConcern: new WriteConcern(fsync: true));
     });
   }
@@ -85,6 +79,7 @@ class MessageRepository {
       return await command(connection.conn);
     } catch (e) {
       print("Error with database connection: $e}");
+      rethrow;
     } finally {
       connectionPool.releaseConnection(connection);
     }
@@ -92,8 +87,13 @@ class MessageRepository {
 
   Future clearMessages() async {
     return executeWrappedCommand((Db db) async {
-      Db db = await getConnection();
       return db.collection("messages").drop();
+    });
+  }
+
+  Future createIndexOnText() {
+    return executeWrappedCommand((Db db) async {
+      return db.createIndex("messages", keys: {'text': 'text'});
     });
   }
 }

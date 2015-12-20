@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:connection_pool/connection_pool.dart';
 import 'package:di/di.dart';
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:redstone_mapper/mapper.dart';
-import 'package:redstone_mapper/mapper_factory.dart';
 import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
 import 'package:slack_history_keeper_shared/models.dart';
+import 'dart:convert';
 
 @Injectable()
 class ChannelRepository {
@@ -16,19 +15,12 @@ class ChannelRepository {
 
   Future<Db> getConnection() async => connection.conn;
 
-  ChannelRepository(this.connectionPool) {
-    bootstrapMapper();
-  }
+  ChannelRepository(this.connectionPool);
 
-  Future<List<Channel>> fetchChannels() {
+  Future<List<Channel>> fetchChannels() async {
     return executeWrappedCommand((Db db) async {
-      List<Channel> channels = await db
-          .collection("channels")
-          .find()
-          .map((Map m) => decode(m, Channel))
-          .toList();
-
-      return channels;
+      var maps = await db.collection("channels").find().toList();
+      return maps.map((Map m) => new Channel.fromJson(m)).toList();
     });
   }
 
@@ -39,7 +31,7 @@ class ChannelRepository {
 
     return executeWrappedCommand((Db db) async {
       return db.collection("channels").insertAll(
-          channels.map((Channel c) => encode(c)).toList(),
+          channels.map((Channel c) => JSON.encode(c)).toList(),
           writeConcern: new WriteConcern(fsync: true));
     });
   }

@@ -7,8 +7,10 @@ class ChannelsGroup {
   ChannelsGroup(this.channelsService);
 
   @app.DefaultRoute(responseType: 'application/json')
-  @Encode()
-  List<Channel> getChannels() {
-    return channelsService.getChannels();
+  List<Map> getChannels() {
+    return channelsService
+        .getChannels()
+        .map((Channel c) => JSON.encode(c))
+        .toList();
   }
 }

@@ -7,8 +7,10 @@ class EmoticonsGroup {
   EmoticonsGroup(this.emoticonsService);
 
   @app.DefaultRoute(responseType: 'application/json')
-  @Encode()
-  List<Emoticon> getEmoticons() {
-    return emoticonsService.fetchEmoticons();
+  List<Map> getEmoticons() {
+    return emoticonsService
+        .fetchEmoticons()
+        .map((Emoticon e) => JSON.encode(e))
+        .toList();
   }
 }

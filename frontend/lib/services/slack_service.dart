@@ -5,8 +5,6 @@ import 'dart:async';
 import 'package:http/browser_client.dart' as http;
 import 'package:slack_history_keeper_shared/models.dart';
 import 'dart:convert';
-import 'package:redstone_mapper/mapper.dart';
-import 'package:redstone_mapper/mapper_factory.dart';
 import 'package:slack_history_keeper_frontend/services/query_parser.dart' as qp;
 import 'package:slack_history_keeper_frontend/services/name_to_id_mixin.dart';
 import 'package:event_bus/event_bus.dart';
@@ -23,7 +21,6 @@ class SlackService extends Object with NameToId {
   Timer cacheTimer;
 
   SlackService(this.eventBus) {
-    bootstrapMapper();
     refreshCache(true);
     cacheTimer = new Timer.periodic(
         new Duration(minutes: 5), (t) => refreshCache(false));
@@ -64,7 +61,7 @@ class SlackService extends Object with NameToId {
 
     List<Map> json = JSON.decode(result.body);
 
-    var list = json.map((Map m) => decode(m, Message)).toList();
+    var list = json.map((Map m) => new Message.fromJson(m)).toList();
     return list;
   }
 
@@ -86,12 +83,12 @@ class SlackService extends Object with NameToId {
   Future<Map> fetchUsers() async {
     var result = await client.get('$apiUrl/users');
 
-    List<Map> json = JSON.decode(result.body);
+    List<String> json = JSON.decode(result.body);
 
     Map association = {};
 
     json
-        .map((Map m) => decode(m, User))
+        .map((String m) => new User.fromJson(JSON.decode(m)))
         .forEach((User u) => association[u.id] = u);
 
     return association;
@@ -100,12 +97,12 @@ class SlackService extends Object with NameToId {
   Future<Map> fetchChannels() async {
     var result = await client.get('$apiUrl/channels');
 
-    List<Map> json = JSON.decode(result.body);
+    List<String> json = JSON.decode(result.body);
 
     Map association = {};
 
     json
-        .map((Map m) => decode(m, Channel))
+        .map((String m) => new Channel.fromJson(JSON.decode(m)))
         .forEach((Channel c) => association[c.id] = c);
 
     return association;
@@ -114,12 +111,12 @@ class SlackService extends Object with NameToId {
   Future<Map> fetchEmoticons() async {
     var result = await client.get('$apiUrl/emoticons');
 
-    List<Map> json = JSON.decode(result.body);
+    List<String> json = JSON.decode(result.body);
 
     Map association = {};
 
     json
-        .map((Map m) => decode(m, Emoticon))
+        .map((String m) => new Emoticon.fromJson(JSON.decode(m)))
         .forEach((Emoticon e) => association[e.name] = e);
 
     return association;

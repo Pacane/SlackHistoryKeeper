@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:slack_history_keeper_shared/models.dart';
 import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
@@ -16,7 +17,8 @@ class SlackConnector {
     var response = await http.get(url);
     Map json = JSON.decode(response.body);
     List<Map> membersJson = json['members'];
-    var members = membersJson.map((Map map) => new User.fromJson(map)).toList();
+    var members =
+        membersJson.map((Map map) => new User.fromSlackJson(map)).toList();
 
     Map<String, User> usersCache = {};
     members.forEach((User u) => usersCache[u.id] = u);
@@ -109,13 +111,13 @@ class SlackConnector {
   }
 
   Future<Map<String, Emoticon>> fetchEmoticons() async {
-    var url =
-        'https://slack.com/api/emoji.list?token=$slackApiToken&pretty=1';
+    var url = 'https://slack.com/api/emoji.list?token=$slackApiToken&pretty=1';
     var response = await http.get(url);
 
     Map json = JSON.decode(response.body);
     Map<String, Emoticon> emoticons = {};
-    json['emoji'].forEach((String k, String v) => emoticons[k] = new Emoticon.data(k, v));
+    json['emoji'].forEach(
+        (String k, String v) => emoticons[k] = new Emoticon.data(k, v));
 
     cache.emoticons = emoticons;
 
