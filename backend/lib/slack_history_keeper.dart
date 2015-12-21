@@ -16,7 +16,7 @@ import 'package:slack_history_keeper_backend/src/channel_repository.dart';
 import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
 import 'package:slack_history_keeper_backend/src/polling_daemon.dart';
 import 'package:slack_history_keeper_backend/src/slack_connector/slack_connector.dart';
-import 'package:slack_history_keeper_shared/models.dart';
+import 'package:slack_history_keeper_shared/slack_cache.dart';
 
 String slackApiToken;
 String databaseUri;

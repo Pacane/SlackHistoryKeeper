@@ -37,7 +37,7 @@ class QueryParser {
   }
 
   Query createQuery(
-      String keywords, Set channelIds, Set userIds) {
+      String keywords, Set<String> channelIds, Set<String> userIds) {
     var query = new Query();
 
     query.keywords = emptyToNull(keywords);

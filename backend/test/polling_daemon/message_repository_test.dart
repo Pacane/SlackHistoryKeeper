@@ -18,7 +18,6 @@ ModuleInjector injector =
 
 void main() {
   final userId = '4329830';
-  final messageId = '2135465';
   final timestamp = '234578767';
   final text = 'hello!';
 
@@ -27,10 +26,8 @@ void main() {
   setUp(() async {
     await messageRepository.insertMessages([
       new Message()
-        ..id = messageId
         ..userId = userId
         ..timestamp = timestamp
-        ..attachments = []
         ..text = text
     ]);
   });
@@ -41,10 +38,8 @@ void main() {
 
   test('repository can fetch messages', () async {
     List<Message> messages = await messageRepository.fetchMessages();
-    expect(messages[0].id, messageId);
     expect(messages[0].userId, userId);
     expect(messages[0].timestamp, timestamp);
     expect(messages[0].text, text);
-    expect(messages[0].attachments, []);
   });
 }

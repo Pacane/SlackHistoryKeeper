@@ -13,11 +13,8 @@ dependencies:
   slack_history_keeper_shared:
     path: ../shared
   event_bus: "^0.4.1"
+  script_inliner: "^1.0.0"
 dependency_overrides:
-  redstone_mapper:
-    git: https://github.com/redstone-dart/redstone_mapper.git
-  redstone_mapper_mongo:
-    git: https://github.com/redstone-dart/redstone_mapper_mongo.git
   code_transformers: 0.3.1
   analyzer: 0.27.0
 dev_dependencies:
@@ -28,4 +25,7 @@ transformers:
       entry_points: web/main.dart
   - sass:
       style: compact
-  - redstone_mapper
+  - $dart2js:
+      minify: true
+      commandLineOptions: [--dump-info]
+  - script_inliner

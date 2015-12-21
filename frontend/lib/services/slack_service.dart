@@ -5,12 +5,12 @@ import 'dart:async';
 import 'package:http/browser_client.dart' as http;
 import 'package:slack_history_keeper_shared/models.dart';
 import 'dart:convert';
-import 'package:redstone_mapper/mapper.dart';
-import 'package:redstone_mapper/mapper_factory.dart';
 import 'package:slack_history_keeper_frontend/services/query_parser.dart' as qp;
 import 'package:slack_history_keeper_frontend/services/name_to_id_mixin.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:slack_history_keeper_frontend/events/slack_data_loaded_event.dart';
+import 'package:slack_history_keeper_shared/slack_cache.dart';
+import 'package:slack_history_keeper_shared/convert.dart';
 
 const String apiUrl = 'http://localhost:8084/api';
 
@@ -19,11 +19,13 @@ class SlackService extends Object with NameToId {
   final http.BrowserClient client = new http.BrowserClient();
   final SlackCache cache = new SlackCache();
   final EventBus eventBus;
+  final UserDecoder userDecoder = new UserDecoder();
+  final ChannelDecoder channelDecoder = new ChannelDecoder();
+  final EmoticonDecoder emoticonDecoder = new EmoticonDecoder();
 
   Timer cacheTimer;
 
   SlackService(this.eventBus) {
-    bootstrapMapper();
     refreshCache(true);
     cacheTimer = new Timer.periodic(
         new Duration(minutes: 5), (t) => refreshCache(false));
@@ -62,10 +64,12 @@ class SlackService extends Object with NameToId {
 
     var result = await client.get('$apiUrl/messages?${params.join('&')}');
 
-    List<Map> json = JSON.decode(result.body);
+    var json = JSON.decode(result.body) as List<Map>;
 
-    var list = json.map((Map m) => decode(m, Message)).toList();
-    return list;
+    var messageDecoder = new MessageDecoder();
+    var messages = json.map((s) => messageDecoder.convert(s)).toList();
+
+    return messages;
   }
 
   void appendParam(
@@ -83,43 +87,43 @@ class SlackService extends Object with NameToId {
     }
   }
 
-  Future<Map> fetchUsers() async {
+  Future<Map<String, User>> fetchUsers() async {
     var result = await client.get('$apiUrl/users');
 
-    List<Map> json = JSON.decode(result.body);
+    var json = JSON.decode(result.body) as List<Map>;
 
-    Map association = {};
+    var association = <String, User>{};
 
     json
-        .map((Map m) => decode(m, User))
+        .map((Map m) => userDecoder.convert(m))
         .forEach((User u) => association[u.id] = u);
 
     return association;
   }
 
-  Future<Map> fetchChannels() async {
+  Future<Map<String, Channel>> fetchChannels() async {
     var result = await client.get('$apiUrl/channels');
 
-    List<Map> json = JSON.decode(result.body);
+    var json = JSON.decode(result.body) as List<Map>;
 
-    Map association = {};
+    var association = <String, Channel>{};
 
     json
-        .map((Map m) => decode(m, Channel))
+        .map((Map m) => channelDecoder.convert(m))
         .forEach((Channel c) => association[c.id] = c);
 
     return association;
   }
 
-  Future<Map> fetchEmoticons() async {
+  Future<Map<String, Emoticon>> fetchEmoticons() async {
     var result = await client.get('$apiUrl/emoticons');
 
-    List<Map> json = JSON.decode(result.body);
+    var json = JSON.decode(result.body) as List<Map>;
 
-    Map association = {};
+    var association = <String, Emoticon>{};
 
     json
-        .map((Map m) => decode(m, Emoticon))
+        .map((Map m) => emoticonDecoder.convert(m))
         .forEach((Emoticon e) => association[e.name] = e);
 
     return association;

@@ -7,7 +7,6 @@ class EmoticonsGroup {
   EmoticonsGroup(this.emoticonsService);
 
   @app.DefaultRoute(responseType: 'application/json')
-  @Encode()
   List<Emoticon> getEmoticons() {
     return emoticonsService.fetchEmoticons();
   }

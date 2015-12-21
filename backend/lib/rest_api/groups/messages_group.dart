@@ -6,12 +6,13 @@ class MessagesGroup {
 
   MessagesGroup(this.messageService);
 
-  @app.DefaultRoute(responseType: "application/json")
-  @Encode()
-  Future<List<Message>> getMessages(@app.QueryParam("q") String query) {
+  @app.DefaultRoute(responseType: 'application/json')
+  Future<List<Message>> getMessages(@app.QueryParam("q") String query) async {
     List<String> channelIds = app.request.queryParameters.get('c', []);
     List<String> userIds = app.request.queryParameters.get('u', []);
+    var messages =
+        await messageService.fetchMessages(query, channelIds, userIds);
 
-    return messageService.fetchMessages(query, channelIds, userIds);
+    return messages.toList();
   }
 }

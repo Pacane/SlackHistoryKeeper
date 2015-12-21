@@ -1,0 +1,9 @@
+name: slack_history_keeper
+author: Joel Trottier-Hebert <iamquebecois@gmail.com>
+homepage: https://github.com/Pacane/SlackHistoryKeeper
+version: 0.1.0
+environment:
+  sdk: '>=1.0.0 <2.0.0'
+description: Search Slack history
+dev_dependencies:
+  grinder: '>=0.8.0+1 <0.9.0'

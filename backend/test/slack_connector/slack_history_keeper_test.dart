@@ -7,6 +7,8 @@ library slack_history_keeper.test;
 import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
 import 'package:test/test.dart';
 import 'package:slack_history_keeper_shared/models.dart';
+import 'package:slack_history_keeper_shared/slack_cache.dart';
+
 
 void main() {
   slackApiToken = 'xoxp-10922254176-10918404932-10925301090-9127fdfa6d';

@@ -1,35 +1,31 @@
 import 'dart:async';
 
-import 'package:connection_pool/connection_pool.dart';
 import 'package:di/di.dart';
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:redstone_mapper/mapper.dart';
-import 'package:redstone_mapper/mapper_factory.dart';
-import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
 import 'package:slack_history_keeper_shared/models.dart';
+import 'package:slack_history_keeper_shared/convert.dart';
+import 'package:slack_history_keeper_backend/src/has_connection_pool.dart';
+import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
 
 @Injectable()
-class ChannelRepository {
-  final MongoDbPool connectionPool;
+class ChannelRepository extends HasConnectionPool {
+  final ChannelDecoder channelDecoder = new ChannelDecoder();
+  final ChannelEncoder channelEncoder = new ChannelEncoder();
 
-  ManagedConnection connection;
+  ChannelRepository(MongoDbPool connectionPool) : super(connectionPool);
 
-  Future<Db> getConnection() async => connection.conn;
+  Future<List<Channel>> fetchChannels() async {
+    var channels = <Channel>[];
 
-  ChannelRepository(this.connectionPool) {
-    bootstrapMapper();
-  }
-
-  Future<List<Channel>> fetchChannels() {
     return executeWrappedCommand((Db db) async {
-      List<Channel> channels = await db
-          .collection("channels")
-          .find()
-          .map((Map m) => decode(m, Channel))
-          .toList();
+      var maps = await db.collection("channels").find();
+
+      await for (Map m in maps) {
+        channels.add(channelDecoder.convert(m));
+      }
 
       return channels;
-    });
+    }) as List<Channel>;
   }
 
   Future insertChannels(List<Channel> channels) {
@@ -39,22 +35,8 @@ class ChannelRepository {
 
     return executeWrappedCommand((Db db) async {
       return db.collection("channels").insertAll(
-          channels.map((Channel c) => encode(c)).toList(),
+          channels.map((Channel c) => channelEncoder.convert(c)).toList(),
           writeConcern: new WriteConcern(fsync: true));
     });
   }
-
-  Future executeWrappedCommand(CommandToExecute command) async {
-    try {
-      var connection = await connectionPool.getConnection();
-
-      return await command(connection.conn);
-    } catch (e) {
-      print("Error with database connection: $e}");
-    } finally {
-      connectionPool.releaseConnection(connection);
-    }
-  }
 }
-
-typedef Future CommandToExecute(Db db);

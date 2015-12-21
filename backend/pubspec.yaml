@@ -16,15 +16,10 @@ dependencies:
 dependency_overrides:
   redstone:
     git: https://github.com/redstone-dart/redstone.git
-  redstone_mapper:
-    git: https://github.com/redstone-dart/redstone_mapper.git
-  redstone_mapper_mongo:
-    git: https://github.com/redstone-dart/redstone_mapper_mongo.git
   di:
     git: https://github.com/Pacane/di.dart.git
   mongo_dart_query:
     git: https://github.com/meriouma/mongo_dart_query.git
+  analyzer: 0.27.0
 dev_dependencies:
   test: "^0.12.4+9"
-transformers:
-- redstone_mapper

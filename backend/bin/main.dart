@@ -8,7 +8,8 @@ import 'dart:io';
 import 'package:logging/logging.dart';
 import 'package:slack_history_keeper_backend/slack_history_keeper.dart'
     as slack_history_keeper;
-import 'package:slack_history_keeper_backend/rest_api/rest_api.dart' as rest_api;
+import 'package:slack_history_keeper_backend/rest_api/rest_api.dart'
+    as rest_api;
 
 final Logger log = new Logger('Application');
 
