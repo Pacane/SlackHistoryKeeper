@@ -8,8 +8,6 @@ class UsersGroup {
 
   @app.DefaultRoute(responseType: 'application/json')
   List<User> getUsers() {
-    return usersService
-        .getUsers()
-        .toList();
+    return usersService.getUsers();
   }
 }

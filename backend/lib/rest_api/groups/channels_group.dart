@@ -8,8 +8,6 @@ class ChannelsGroup {
 
   @app.DefaultRoute(responseType: 'application/json')
   List<Channel> getChannels() {
-    return channelsService
-        .getChannels()
-        .toList();
+    return channelsService.getChannels();
   }
 }

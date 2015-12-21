@@ -8,8 +8,6 @@ class EmoticonsGroup {
 
   @app.DefaultRoute(responseType: 'application/json')
   List<Emoticon> getEmoticons() {
-    return emoticonsService
-        .fetchEmoticons()
-        .toList();
+    return emoticonsService.fetchEmoticons();
   }
 }
