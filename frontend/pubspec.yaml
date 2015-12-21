@@ -23,9 +23,9 @@ dev_dependencies:
 transformers:
   - angular2:
       entry_points: web/main.dart
+  - script_inliner
   - sass:
       style: compact
   - $dart2js:
       minify: true
       commandLineOptions: [--dump-info]
-  - script_inliner

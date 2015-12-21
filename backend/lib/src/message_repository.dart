@@ -41,7 +41,7 @@ class MessageRepository extends HasConnectionPool {
           ..metaTextScore("score")
           ..sortByMetaTextScore("score");
       if (channelIds.isNotEmpty) query = query.oneFrom("channelId", channelIds);
-      if (userIds.isNotEmpty) query = query.oneFrom("userId", userIds);
+      if (userIds.isNotEmpty) query = query.oneFrom("user", userIds);
 
       var documents = await db.collection("messages").find(query);
       var messages = <Message>[];
