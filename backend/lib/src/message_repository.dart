@@ -1,24 +1,19 @@
 import 'dart:async';
 
-import 'package:connection_pool/connection_pool.dart';
 import 'package:di/di.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
 import 'package:slack_history_keeper_shared/models.dart';
 import 'package:quiver/strings.dart';
 import 'package:slack_history_keeper_shared/convert.dart';
+import 'package:slack_history_keeper_backend/src/has_connection_pool.dart';
 
 @Injectable()
-class MessageRepository {
-  final MongoDbPool connectionPool;
+class MessageRepository extends HasConnectionPool {
   final MessageDecoder messageDecoder = new MessageDecoder();
   final MessageEncoder messageEncoder = new MessageEncoder();
 
-  ManagedConnection connection;
-
-  Future<Db> getConnection() async => connection.conn;
-
-  MessageRepository(this.connectionPool);
+  MessageRepository(MongoDbPool connectionPool) : super(connectionPool);
 
   Future<List<Message>> fetchMessages(
       {List<String> channelIds: const [], List<String> userIds: const []}) {
@@ -78,19 +73,6 @@ class MessageRepository {
     });
   }
 
-  Future executeWrappedCommand(CommandToExecute command) async {
-    try {
-      var connection = await connectionPool.getConnection();
-
-      return await command(connection.conn);
-    } catch (e) {
-      print("Error with database connection: $e}");
-      rethrow;
-    } finally {
-      connectionPool.releaseConnection(connection);
-    }
-  }
-
   Future clearMessages() async {
     return executeWrappedCommand((Db db) async {
       return db.collection("messages").drop();
@@ -103,5 +85,3 @@ class MessageRepository {
     });
   }
 }
-
-typedef Future CommandToExecute(Db db);
