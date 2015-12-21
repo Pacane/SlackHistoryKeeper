@@ -9,6 +9,9 @@ import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
 
 class SlackConnector {
   final SlackCache cache;
+  final UserDecoder userDecoder = new UserDecoder();
+  final MessageDecoder messageDecoder = new MessageDecoder();
+  final ChannelDecoder channelDecoder = new ChannelDecoder();
 
   SlackConnector(this.cache);
 
@@ -16,7 +19,6 @@ class SlackConnector {
     String url =
         'https://slack.com/api/users.list?token=$slackApiToken&pretty=1';
 
-    var userDecoder = new UserDecoder();
     var response = await http.get(url);
     Map json = JSON.decode(response.body);
     List<Map> membersJson = json['members'] as List<Map>;
@@ -48,7 +50,6 @@ class SlackConnector {
 
   List<Message> _extractMessages(Map json) {
     List<Map> jsonMessages = json['messages'] as List<Map>;
-    var messageDecoder = new MessageDecoder();
     List<Message> messages = [];
 
     if (jsonMessages != null) {
@@ -93,8 +94,6 @@ class SlackConnector {
 
   Future<List<Channel>> fetchChannels({bool excludeArchived: false}) async {
     String excludeArchivedParameter = "";
-    var channelDecoder = new ChannelDecoder();
-
     if (excludeArchived) {
       excludeArchivedParameter = "&exclude_archived=1";
     }

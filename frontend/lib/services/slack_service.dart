@@ -19,16 +19,13 @@ class SlackService extends Object with NameToId {
   final http.BrowserClient client = new http.BrowserClient();
   final SlackCache cache = new SlackCache();
   final EventBus eventBus;
-  final UserDecoder userDecoder;
-  final ChannelDecoder channelDecoder;
-  final EmoticonDecoder emoticonDecoder;
+  final UserDecoder userDecoder = new UserDecoder();
+  final ChannelDecoder channelDecoder = new ChannelDecoder();
+  final EmoticonDecoder emoticonDecoder = new EmoticonDecoder();
 
   Timer cacheTimer;
 
-  SlackService(this.eventBus)
-      : userDecoder = new UserDecoder(),
-        emoticonDecoder = new EmoticonDecoder(),
-        channelDecoder = new ChannelDecoder() {
+  SlackService(this.eventBus) {
     refreshCache(true);
     cacheTimer = new Timer.periodic(
         new Duration(minutes: 5), (t) => refreshCache(false));

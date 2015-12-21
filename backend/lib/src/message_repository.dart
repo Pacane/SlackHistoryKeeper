@@ -11,16 +11,14 @@ import 'package:slack_history_keeper_shared/convert.dart';
 @Injectable()
 class MessageRepository {
   final MongoDbPool connectionPool;
-  final MessageDecoder messageDecoder;
-  final MessageEncoder messageEncoder;
+  final MessageDecoder messageDecoder = new MessageDecoder();
+  final MessageEncoder messageEncoder = new MessageEncoder();
 
   ManagedConnection connection;
 
   Future<Db> getConnection() async => connection.conn;
 
-  MessageRepository(this.connectionPool)
-      : this.messageDecoder = new MessageDecoder(),
-        this.messageEncoder = new MessageEncoder();
+  MessageRepository(this.connectionPool);
 
   Future<List<Message>> fetchMessages(
       {List<String> channelIds: const [], List<String> userIds: const []}) {

@@ -10,6 +10,8 @@ import 'package:slack_history_keeper_shared/convert.dart';
 @Injectable()
 class ChannelRepository {
   final MongoDbPool connectionPool;
+  final ChannelDecoder channelDecoder = new ChannelDecoder();
+  final ChannelEncoder channelEncoder = new ChannelEncoder();
 
   ManagedConnection connection;
 
@@ -19,7 +21,6 @@ class ChannelRepository {
 
   Future<List<Channel>> fetchChannels() async {
     var channels = <Channel>[];
-    var channelDecoder = new ChannelDecoder();
 
     return executeWrappedCommand((Db db) async {
       var maps = await db.collection("channels").find();
@@ -33,7 +34,6 @@ class ChannelRepository {
   }
 
   Future insertChannels(List<Channel> channels) {
-    var channelEncoder = new ChannelEncoder();
     channels.forEach((Channel c) => print("$c \n"));
 
     if (channels.isEmpty) return new Future.value();
