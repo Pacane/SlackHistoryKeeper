@@ -4,7 +4,11 @@ import 'package:markdown/markdown.dart';
 import 'package:slack_history_keeper_frontend/services/slack_service.dart';
 import 'package:slack_history_keeper_shared/models.dart';
 
-const List parserBindings = const [MessageParser, MentionSyntax, EmoticonSyntax];
+const List parserBindings = const [
+  MessageParser,
+  MentionSyntax,
+  EmoticonSyntax
+];
 
 @Pipe(name: 'messageParser', pure: true)
 @Injectable()

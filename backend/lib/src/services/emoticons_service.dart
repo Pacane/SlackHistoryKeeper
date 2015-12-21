@@ -6,6 +6,5 @@ class EmoticonsService {
 
   EmoticonsService(this.slackCache);
 
-  List<Emoticon> fetchEmoticons() =>
-      slackCache.getEmoticons();
+  List<Emoticon> fetchEmoticons() => slackCache.getEmoticons();
 }

@@ -5,7 +5,9 @@ import 'package:slack_history_keeper_frontend/components/message/message_compone
 import 'package:slack_history_keeper_shared/models.dart';
 
 @Component(selector: 'messages')
-@View(templateUrl: 'messages_component.html', directives: const [NgFor, NgIf, MessageComponent])
+@View(
+    templateUrl: 'messages_component.html',
+    directives: const [NgFor, NgIf, MessageComponent])
 class MessagesComponent {
   @Input()
   List<Message> messages;

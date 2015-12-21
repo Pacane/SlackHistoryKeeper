@@ -13,7 +13,6 @@ class MessagesGroup {
     var messages =
         await messageService.fetchMessages(query, channelIds, userIds);
 
-    return messages
-        .toList();
+    return messages.toList();
   }
 }

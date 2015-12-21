@@ -90,7 +90,7 @@ class SlackService extends Object with NameToId {
   Future<Map<String, User>> fetchUsers() async {
     var result = await client.get('$apiUrl/users');
 
-    var json = JSON.decode(result.body) as List<Map>;;
+    var json = JSON.decode(result.body) as List<Map>;
 
     var association = <String, User>{};
 
@@ -106,7 +106,7 @@ class SlackService extends Object with NameToId {
 
     var json = JSON.decode(result.body) as List<Map>;
 
-    var association = <String, Channel> {};
+    var association = <String, Channel>{};
 
     json
         .map((Map m) => channelDecoder.convert(m))
