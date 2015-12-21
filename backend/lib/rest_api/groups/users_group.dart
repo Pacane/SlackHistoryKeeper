@@ -6,8 +6,10 @@ class UsersGroup {
 
   UsersGroup(this.usersService);
 
-  @app.DefaultRoute()
+  @app.DefaultRoute(responseType: 'application/json')
   List<User> getUsers() {
-    return usersService.getUsers().map((User u) => JSON.encode(u)).toList();
+    return usersService
+        .getUsers()
+        .toList();
   }
 }

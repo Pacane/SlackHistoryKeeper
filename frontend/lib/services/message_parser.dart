@@ -9,7 +9,7 @@ const List parserBindings = const [MessageParser, MentionSyntax, EmoticonSyntax]
 @Pipe(name: 'messageParser', pure: true)
 @Injectable()
 class MessageParser implements PipeTransform {
-  List<TextSyntax> inlineSyntaxes = [];
+  List<InlineSyntax> inlineSyntaxes = [];
 
   MessageParser(MentionSyntax mentionSyntax, EmoticonSyntax emoticonSyntax) {
     inlineSyntaxes = [

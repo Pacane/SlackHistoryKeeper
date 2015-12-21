@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:slack_history_keeper_shared/models.dart';
+import 'package:slack_history_keeper_shared/slack_cache.dart';
+import 'package:slack_history_keeper_shared/convert.dart';
 import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
 
 class SlackConnector {
@@ -14,11 +16,15 @@ class SlackConnector {
     String url =
         'https://slack.com/api/users.list?token=$slackApiToken&pretty=1';
 
+    var userDecoder = new UserDecoder();
     var response = await http.get(url);
     Map json = JSON.decode(response.body);
-    List<Map> membersJson = json['members'];
-    var members =
-        membersJson.map((Map map) => new User.fromSlackJson(map)).toList();
+    List<Map> membersJson = json['members'] as List<Map>;
+    var members = membersJson.map((Map map) {
+      var user = userDecoder.convert(map);
+      user.avatar = map['profile']['image_32'];
+      return user;
+    }).toList() as List<User>;
 
     Map<String, User> usersCache = {};
     members.forEach((User u) => usersCache[u.id] = u);
@@ -41,13 +47,13 @@ class SlackConnector {
   }
 
   List<Message> _extractMessages(Map json) {
-    List<Map> jsonMessages = json['messages'];
-
+    List<Map> jsonMessages = json['messages'] as List<Map>;
+    var messageDecoder = new MessageDecoder();
     List<Message> messages = [];
 
     if (jsonMessages != null) {
       messages =
-          jsonMessages.map((Map map) => new Message.fromJson(map)).toList();
+          jsonMessages.map((Map map) => messageDecoder.convert(map)).toList();
     }
 
     return messages;
@@ -87,6 +93,7 @@ class SlackConnector {
 
   Future<List<Channel>> fetchChannels({bool excludeArchived: false}) async {
     String excludeArchivedParameter = "";
+    var channelDecoder = new ChannelDecoder();
 
     if (excludeArchived) {
       excludeArchivedParameter = "&exclude_archived=1";
@@ -98,10 +105,10 @@ class SlackConnector {
     var response = await http.get(url);
 
     Map json = JSON.decode(response.body);
-    List<Map> channelsJson = json['channels'];
+    List<Map> channelsJson = json['channels'] as List<Map>;
 
     var channels =
-        channelsJson.map((Map map) => new Channel.fromJson(map)).toList();
+        channelsJson.map((Map map) => channelDecoder.convert(map)).toList();
 
     Map<String, Channel> channelsCache = {};
     channels.forEach((Channel c) => channelsCache[c.id] = c);

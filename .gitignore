@@ -1,3 +1,5 @@
+/shared/lib/src/convert
+/shared/lib/convert.dart
 .buildlog
 .DS_Store
 .idea

@@ -29,6 +29,6 @@ class SearchComponent {
 
     var query = await queryParser.parse(queryText);
     messages = await service.search(query);
-    messages = messages.reversed;
+    messages = messages.reversed.toList();
   }
 }

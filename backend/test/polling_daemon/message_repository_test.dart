@@ -28,7 +28,6 @@ void main() {
       new Message()
         ..userId = userId
         ..timestamp = timestamp
-        ..attachments = []
         ..text = text
     ]);
   });
@@ -42,6 +41,5 @@ void main() {
     expect(messages[0].userId, userId);
     expect(messages[0].timestamp, timestamp);
     expect(messages[0].text, text);
-    expect(messages[0].attachments, []);
   });
 }
