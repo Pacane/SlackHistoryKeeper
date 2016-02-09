@@ -3,7 +3,7 @@ part of rest_api;
 @app.Group("/")
 class CORSInterceptor {
   @app.Interceptor(r'/.*')
-  Future<Response> handleCORS() async {
+  Future<shelf.Response> handleCORS() async {
     if (app.request.method != "OPTIONS") {
       await app.chain.next();
     }

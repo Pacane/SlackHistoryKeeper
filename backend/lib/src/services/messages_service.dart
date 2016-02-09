@@ -1,3 +1,5 @@
+library slack_history_keeper.messages_service;
+
 import 'dart:async';
 
 import 'package:slack_history_keeper_backend/src/message_repository.dart';

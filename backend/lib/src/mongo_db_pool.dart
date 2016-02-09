@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:connection_pool/connection_pool.dart';
-import 'dart:async';
 
 class MongoDbPool extends ConnectionPool<Db> {
   String uri;

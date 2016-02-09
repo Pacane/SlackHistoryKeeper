@@ -57,7 +57,8 @@ class EmoticonSyntax extends InlineSyntax {
       'https://raw.githubusercontent.com/arvida/emoji-cheat-sheet.com/master/public/graphics/emojis';
   final SlackService slackService;
 
-  EmoticonSyntax(this.slackService) : super(r':([a-zA-Z0-9_]+):');
+  EmoticonSyntax(this.slackService)
+      : super(r':([a-zA-Z0-9_\+\-]+):(:([a-zA-Z0-9_\+\-]+):)?');
 
   @override
   bool onMatch(InlineParser parser, Match match) {

@@ -7,5 +7,6 @@ environment:
 dependencies:
   quiver: "^0.21.4"
   dogma_convert: '^0.0.1'
-  dogma_codegen:
-    path: ../../dogma-codegen
+  dogma_codegen: "^0.0.1"
+dependency_overrides:
+  analyzer: 0.27.1

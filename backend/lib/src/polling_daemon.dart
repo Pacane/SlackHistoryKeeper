@@ -1,11 +1,15 @@
-import 'package:di/di.dart';
 import 'dart:async';
+
+import 'package:di/di.dart';
 import 'package:logging/logging.dart';
 import 'package:quiver/strings.dart';
+
 import 'package:slack_history_keeper_shared/models.dart';
-import 'package:slack_history_keeper_backend/src/message_repository.dart';
-import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
-import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
+
+import '../slack_connector.dart';
+
+import 'message_repository.dart';
+import 'mongo_db_pool.dart';
 
 @Injectable()
 class PollingDaemon {

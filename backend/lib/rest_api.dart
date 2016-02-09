@@ -4,18 +4,20 @@ import 'dart:async';
 
 import 'package:di/di.dart';
 import 'package:redstone/redstone.dart' as app;
-import 'package:shelf/shelf.dart';
-import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
-import 'package:slack_history_keeper_shared/models.dart';
-import 'package:slack_history_keeper_shared/slack_cache.dart';
-import 'package:slack_history_keeper_backend/src/services/users_service.dart';
-import 'package:slack_history_keeper_backend/src/services/emoticons_service.dart';
 
-part 'groups/channels_group.dart';
-part 'groups/messages_group.dart';
-part 'groups/users_group.dart';
-part 'groups/emoticons_group.dart';
-part 'interceptors/cors_interceptor.dart';
+import 'package:slack_history_keeper_shared/slack_cache.dart';
+
+import 'slack_history_keeper.dart';
+import 'slack_connector.dart';
+
+import 'package:shelf/shelf.dart' as shelf;
+
+part 'src/rest_api/interceptors/cors_interceptor.dart';
+
+part 'src/rest_api/groups/channels_group.dart';
+part 'src/rest_api/groups/emoticons_group.dart';
+part 'src/rest_api/groups/messages_group.dart';
+part 'src/rest_api/groups/users_group.dart';
 
 const String baseUrl = '/api';
 const int port = 8084;

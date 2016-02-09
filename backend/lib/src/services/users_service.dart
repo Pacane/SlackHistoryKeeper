@@ -1,3 +1,5 @@
+library slack_history_keeper.users_service;
+
 import 'package:slack_history_keeper_shared/models.dart';
 import 'package:slack_history_keeper_shared/slack_cache.dart';
 

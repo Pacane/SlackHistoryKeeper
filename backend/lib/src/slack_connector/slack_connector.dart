@@ -1,3 +1,5 @@
+library slack_history_keeper.slack_connector;
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -5,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:slack_history_keeper_shared/models.dart';
 import 'package:slack_history_keeper_shared/slack_cache.dart';
 import 'package:slack_history_keeper_shared/convert.dart';
-import 'package:slack_history_keeper_backend/slack_history_keeper.dart';
+import '../../slack_history_keeper.dart';
 
 class SlackConnector {
   final SlackCache cache;

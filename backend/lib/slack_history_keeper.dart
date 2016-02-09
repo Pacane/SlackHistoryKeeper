@@ -5,18 +5,24 @@
 /// The slack_history_keeper library.
 library slack_history_keeper;
 
-export 'src/slack_connector/slack_connector.dart';
+import 'package:di/di.dart';
+
+import 'package:slack_history_keeper_shared/slack_cache.dart';
+export 'package:slack_history_keeper_shared/models.dart';
+
+import 'slack_connector.dart';
+
+import 'src/message_repository.dart';
+import 'src/channel_repository.dart';
+import 'src/mongo_db_pool.dart';
+import 'src/polling_daemon.dart';
+
 export 'src/polling_daemon.dart';
 export 'src/services/channels_service.dart';
 export 'src/services/messages_service.dart';
+export 'src/services/emoticons_service.dart';
+export 'src/services/users_service.dart';
 
-import 'package:di/di.dart';
-import 'package:slack_history_keeper_backend/src/message_repository.dart';
-import 'package:slack_history_keeper_backend/src/channel_repository.dart';
-import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
-import 'package:slack_history_keeper_backend/src/polling_daemon.dart';
-import 'package:slack_history_keeper_backend/src/slack_connector/slack_connector.dart';
-import 'package:slack_history_keeper_shared/slack_cache.dart';
 
 String slackApiToken;
 String databaseUri;

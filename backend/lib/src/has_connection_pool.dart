@@ -1,8 +1,9 @@
-import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
+import 'dart:async';
+
 import 'package:connection_pool/connection_pool.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
-import 'dart:async';
+import 'mongo_db_pool.dart';
 
 abstract class HasConnectionPool {
   final MongoDbPool connectionPool;

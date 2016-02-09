@@ -54,7 +54,7 @@ class SlackService extends Object with NameToId {
   Emoticon getEmoticonFromName(String name) => cache.getEmoticonFromName(name);
 
   Future<List<Message>> search(qp.Query searchQuery) async {
-    List<String> params = [];
+    var params = <String>[];
     appendParam(searchQuery.channelIds, params, "c");
     appendParam(searchQuery.userIds, params, "u");
 

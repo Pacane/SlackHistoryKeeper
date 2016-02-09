@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:di/di.dart';
 import 'package:mongo_dart/mongo_dart.dart';
+
 import 'package:slack_history_keeper_shared/models.dart';
 import 'package:slack_history_keeper_shared/convert.dart';
-import 'package:slack_history_keeper_backend/src/has_connection_pool.dart';
-import 'package:slack_history_keeper_backend/src/mongo_db_pool.dart';
+
+import 'has_connection_pool.dart';
+import 'mongo_db_pool.dart';
 
 @Injectable()
 class ChannelRepository extends HasConnectionPool {
