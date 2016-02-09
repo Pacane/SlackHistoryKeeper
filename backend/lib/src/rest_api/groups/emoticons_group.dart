@@ -1,6 +1,5 @@
 part of rest_api;
 
-
 @app.Group("$baseUrl/emoticons")
 class EmoticonsGroup {
   final EmoticonsService emoticonsService;

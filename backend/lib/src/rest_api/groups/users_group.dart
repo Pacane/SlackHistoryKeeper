@@ -1,6 +1,5 @@
 part of rest_api;
 
-
 @app.Group("$baseUrl/users")
 class UsersGroup {
   final UsersService usersService;
