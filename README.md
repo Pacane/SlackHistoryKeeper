@@ -3,6 +3,7 @@
 An application that scrapes Slack chat and saves history.
 
 ## Requirements
+* Have [sass](https://github.com/sass/sass) installed. Can also be [sassc](https://github.com/sass/sassc). Just make sure to configure the transformer.
 * Declare an environment variable called `SLACK_TOKEN` with a string value of your Slack Api token.
 * Declare an environment variable called `SLACK_DB_URI` with the URI of your mongo database that will store the messages.
 
