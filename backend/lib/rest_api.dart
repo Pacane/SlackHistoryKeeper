@@ -2,6 +2,7 @@ library rest_api;
 
 import 'dart:async';
 
+import 'dart:io';
 import 'package:di/di.dart';
 import 'package:redstone/redstone.dart' as app;
 
@@ -23,6 +24,12 @@ const String baseUrl = '/api';
 const int port = 8084;
 
 Future startApiServer() async {
+  await init();
+
+  app.start(port: port);
+}
+
+init() async {
   app.addModule(repositoryModule);
   app.addModule(databaseModule);
   app.addModule(new Module()
@@ -33,5 +40,9 @@ Future startApiServer() async {
     ..bind(EmoticonsService)
     ..bind(SlackCache, toValue: injector.get(SlackCache)));
 
-  app.start(port: port);
+  await app.redstoneSetUp();
+}
+
+serveRequest(HttpRequest request) {
+  app.handleRequest(request);
 }

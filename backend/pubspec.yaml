@@ -12,14 +12,15 @@ dependencies:
   connection_pool: "^0.1.0+2"
   slack_history_keeper_shared:
     path: ../shared
-  mongo_dart: '^0.2.5-beta'
+  mongo_dart: '0.2.9'
 dependency_overrides:
   redstone:
     git: https://github.com/redstone-dart/redstone.git
   di:
     git: https://github.com/Pacane/di.dart.git
-  mongo_dart_query:
-    git: https://github.com/meriouma/mongo_dart_query.git
+  mongo_dart:
+    git: https://github.com/meriouma/mongo_dart.git
+  mongo_dart_query: "^0.2.2"
   analyzer: 0.27.0
 dev_dependencies:
   test: "^0.12.4+9"
