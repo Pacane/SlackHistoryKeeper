@@ -13,6 +13,7 @@ class User {
   @override
   int get hashCode => hash2(id.hashCode, name.hashCode);
 
+  @override
   String toString() => "$id : $name";
 
   Map toJson() => new UserEncoder().convert(this);
