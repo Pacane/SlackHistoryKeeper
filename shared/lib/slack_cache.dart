@@ -23,15 +23,15 @@ class SlackCache {
 
   Emoticon getEmoticonFromName(String name) => _emoticons[name];
 
-  void set users(Map<String, User> users) {
+  set users(Map<String, User> users) {
     _users = users;
   }
 
-  void set channels(Map<String, Channel> channels) {
+  set channels(Map<String, Channel> channels) {
     _channels = channels;
   }
 
-  void set emoticons(Map<String, Emoticon> emoticons) {
+  set emoticons(Map<String, Emoticon> emoticons) {
     _emoticons = emoticons;
   }
 }

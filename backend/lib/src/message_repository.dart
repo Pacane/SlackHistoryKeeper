@@ -45,7 +45,7 @@ class MessageRepository extends HasConnectionPool {
       if (channelIds.isNotEmpty) query = query.oneFrom("channelId", channelIds);
       if (userIds.isNotEmpty) query = query.oneFrom("user", userIds);
 
-      var documents = await db.collection("messages").find(query);
+      var documents = db.collection("messages").find(query);
       var messages = <Message>[];
       await for (var d in documents) {
         messages.add(messageDecoder.convert(d));

@@ -67,8 +67,8 @@ class PollingDaemon {
   This doesn't catch edit to messages (yet)
    */
   Future poll() async {
-    slackConnector.fetchUsers();
-    slackConnector.fetchEmoticons();
+    await slackConnector.fetchUsers();
+    await slackConnector.fetchEmoticons();
     channels = await slackConnector.fetchChannels();
     filterChannelsToPoll();
 

@@ -2,7 +2,6 @@ library rest_api;
 
 import 'dart:async';
 
-import 'dart:io';
 import 'package:di/di.dart';
 import 'package:redstone/redstone.dart' as app;
 
@@ -29,7 +28,7 @@ Future startApiServer() async {
   app.start(port: port);
 }
 
-init() async {
+Future<Null> init() async {
   app.addModule(repositoryModule);
   app.addModule(databaseModule);
   app.addModule(new Module()
@@ -41,8 +40,4 @@ init() async {
     ..bind(SlackCache, toValue: injector.get(SlackCache)));
 
   await app.redstoneSetUp();
-}
-
-serveRequest(HttpRequest request) {
-  app.handleRequest(request);
 }

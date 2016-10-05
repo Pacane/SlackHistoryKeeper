@@ -8,7 +8,9 @@ class User {
   String name;
   String avatar;
 
-  bool operator ==(User o) => o is User && o.name == name && o.id == id;
+  @override
+  bool operator ==(Object o) => o is User && o.name == name && o.id == id;
+  @override
   int get hashCode => hash2(id.hashCode, name.hashCode);
 
   String toString() => "$id : $name";
