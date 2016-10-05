@@ -26,3 +26,24 @@ linter:
     - unnecessary_getters_setters
     - avoid_empty_else
     - package_names
+    - unrelated_type_equality_checks
+    - throw_in_finally
+    - close_sinks
+    - comment_references
+    - control_flow_in_finally
+    - empty_statements
+    - hash_and_equals
+    - iterable_contains_unrelated_type
+    - list_remove_unrelated_type
+    - test_types_in_equals
+    - throw_in_finally
+    - valid_regexps
+    - annotate_overrides
+    - avoid_init_to_null
+    - avoid_return_types_on_setters
+    - await_only_futures
+    - empty_catches
+    - prefer_is_not_empty
+    - sort_constructors_first
+    - sort_unnamed_constructors_first
+    - unawaited_futures
