@@ -11,9 +11,13 @@ class Channel {
   @Serialize.field('name')
   String name;
 
-  bool operator ==(Channel o) => o is Channel && o.name == name && o.id == id;
+  @override
+  bool operator ==(Object o) => o is Channel && o.name == name && o.id == id;
+
+  @override
   int get hashCode => hash2(id.hashCode, name.hashCode);
 
+  @override
   String toString() => "$id : $name";
 
   Map toJson() => new ChannelEncoder().convert(this);

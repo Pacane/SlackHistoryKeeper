@@ -20,7 +20,7 @@ class ChannelRepository extends HasConnectionPool {
     var channels = <Channel>[];
 
     return executeWrappedCommand((Db db) async {
-      var maps = await db.collection("channels").find();
+      var maps = db.collection("channels").find();
 
       await for (Map m in maps) {
         channels.add(channelDecoder.convert(m));

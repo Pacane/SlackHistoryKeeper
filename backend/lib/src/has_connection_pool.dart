@@ -9,9 +9,10 @@ abstract class HasConnectionPool {
   final MongoDbPool connectionPool;
 
   ManagedConnection connection;
-  Future<Db> getConnection() async => connection.conn;
 
   HasConnectionPool(this.connectionPool);
+
+  Future<Db> getConnection() async => connection.conn;
 
   Future executeWrappedCommand(CommandToExecute command) async {
     try {

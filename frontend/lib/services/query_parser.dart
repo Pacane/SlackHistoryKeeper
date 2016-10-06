@@ -7,9 +7,9 @@ import 'package:slack_history_keeper_frontend/services/name_to_id_mixin.dart';
 
 @Injectable()
 class QueryParser {
-  static final String MENTION = 'mention:';
-  static final String FROM = 'from:';
-  static final String IN = 'in:';
+  static final String mentionToken = 'mention:';
+  static final String fromToken = 'from:';
+  static final String inToken = 'in:';
 
   final NameToId nameToIdConverter;
 
@@ -23,25 +23,27 @@ class QueryParser {
     Set<String> userIds = new HashSet();
 
     var channelExpressions =
-        expressions.where((String exp) => exp.startsWith(IN)).map((token) {
-      channelIds
-          .add(nameToIdConverter.channelNameToId(token.substring(IN.length)));
+        expressions.where((String exp) => exp.startsWith(inToken)).map((token) {
+      channelIds.add(
+          nameToIdConverter.channelNameToId(token.substring(inToken.length)));
       return token;
     }).toSet();
 
     var mentionExpressions =
-        expressions.where((String exp) => exp.startsWith(MENTION));
+        expressions.where((String exp) => exp.startsWith(mentionToken));
     for (var mention in mentionExpressions) {
       var index = expressions.indexOf(mention);
       var userId =
-          nameToIdConverter.userNameToId(mention.substring(MENTION.length));
+          nameToIdConverter.userNameToId(mention.substring(mention.length));
       expressions.remove(mention);
       expressions.insert(index, userId);
     }
 
-    var userExpressions =
-        expressions.where((String exp) => exp.startsWith(FROM)).map((token) {
-      userIds.add(nameToIdConverter.userNameToId(token.substring(FROM.length)));
+    var userExpressions = expressions
+        .where((String exp) => exp.startsWith(fromToken))
+        .map((token) {
+      userIds.add(
+          nameToIdConverter.userNameToId(token.substring(fromToken.length)));
       return token;
     }).toSet();
 

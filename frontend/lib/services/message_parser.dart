@@ -1,7 +1,7 @@
 import 'package:angular2/angular2.dart';
 import 'package:angular2/core.dart' show Pipe;
-import 'package:angular2/src/security/dom_sanitization_service.dart';
 import 'package:markdown/markdown.dart';
+import 'package:angular2/src/security/dom_sanitization_service.dart';
 import 'package:slack_history_keeper_frontend/emojis/emojis.dart';
 import 'package:slack_history_keeper_frontend/services/slack_service.dart';
 import 'package:slack_history_keeper_shared/models.dart';
@@ -95,10 +95,12 @@ class EmoticonSyntax extends InlineSyntax {
 }
 
 class FencedCodeBlockSyntax extends BlockSyntax {
-  RegExp get pattern => new RegExp(r'^[ ]{0,3}(`{3,}|~{3,})(.*)$');
-
   const FencedCodeBlockSyntax();
 
+  @override
+  RegExp get pattern => new RegExp(r'^[ ]{0,3}(`{3,}|~{3,})(.*)$');
+
+  @override
   List<String> parseChildLines(BlockParser parser, [String endBlock]) {
     if (endBlock == null) endBlock = '';
 
@@ -119,6 +121,7 @@ class FencedCodeBlockSyntax extends BlockSyntax {
     return childLines;
   }
 
+  @override
   Node parse(BlockParser parser) {
     // Get the syntax identifier, if there is one.
     var match = pattern.firstMatch(parser.current);

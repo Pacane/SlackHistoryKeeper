@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'package:grinder/grinder.dart';
 
-main(args) => grind(args);
+Future main(List<String> args) => grind(args);
 
 @Task()
-test() {
+void test() {
   var testRunner = new TestRunner();
   testRunner.testAsync(runOptions: new RunOptions(workingDirectory: 'backend'));
   testRunner.testAsync(
@@ -12,12 +13,12 @@ test() {
 
 @DefaultTask()
 @Depends(get, test)
-build() {
+void build() {
   Pub.build(runOptions: new RunOptions(workingDirectory: 'frontend'));
 }
 
 @Task()
-get() {
+void get() {
   Pub.get();
   Pub.get(runOptions: new RunOptions(workingDirectory: 'shared'));
 
@@ -29,7 +30,7 @@ get() {
 }
 
 @Task()
-upgrade() {
+void upgrade() {
   Pub.upgrade();
   Pub.upgrade(runOptions: new RunOptions(workingDirectory: 'shared'));
 
@@ -41,4 +42,4 @@ upgrade() {
 }
 
 @Task()
-clean() => defaultClean();
+void clean() => defaultClean();
