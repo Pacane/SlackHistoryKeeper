@@ -24,10 +24,10 @@ class MessageComponent implements OnInit {
 
   @override
   void ngOnInit() {
-    user = slackService.getUserFromId(message.userId);
-    channel = slackService.getChannelfromId(message.channelId);
+    user = slackService.getUserFromId(message.user);
+    channel = slackService.getChannelfromId(message.channel);
     var formatter = new DateFormat('yyyy-MM-dd H:mm');
     formattedDate = formatter.format(new DateTime.fromMillisecondsSinceEpoch(
-        num.parse(message.timestamp.split(".")[0]) * 1000));
+        num.parse(message.ts.split(".")[0]) * 1000));
   }
 }

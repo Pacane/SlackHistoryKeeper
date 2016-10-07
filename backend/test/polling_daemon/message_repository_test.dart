@@ -26,8 +26,8 @@ void main() {
   setUp(() async {
     await messageRepository.insertMessages([
       new Message()
-        ..userId = userId
-        ..timestamp = timestamp
+        ..user = userId
+        ..ts = timestamp
         ..text = text
     ]);
   });
@@ -38,8 +38,8 @@ void main() {
 
   test('repository can fetch messages', () async {
     List<Message> messages = await messageRepository.fetchMessages();
-    expect(messages[0].userId, userId);
-    expect(messages[0].timestamp, timestamp);
+    expect(messages[0].user, userId);
+    expect(messages[0].ts, timestamp);
     expect(messages[0].text, text);
   });
 }

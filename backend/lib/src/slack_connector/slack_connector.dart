@@ -52,7 +52,7 @@ class SlackConnector {
 
   List<Message> _extractMessages(Map json) {
     List<Map> jsonMessages = json['messages'] as List<Map>;
-    List<Message> messages = [];
+    var messages = <Message>[];
 
     if (jsonMessages != null) {
       messages =
@@ -73,7 +73,7 @@ class SlackConnector {
     checkIfMessageIsOk(isOk, json);
 
     while (json['has_more']) {
-      String lastMessageTimestamp = messages.first.timestamp;
+      String lastMessageTimestamp = messages.first.ts;
       json = await _fetchChannelHistory(channelId,
           lastMessageTimestamp: lastMessageTimestamp);
 
@@ -83,7 +83,7 @@ class SlackConnector {
       messages.addAll(remainingMessages);
     }
 
-    messages.forEach((Message m) => m.channelId = channelId);
+    messages.forEach((Message m) => m.channel = channelId);
 
     return messages;
   }

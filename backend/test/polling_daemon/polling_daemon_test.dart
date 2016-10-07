@@ -39,7 +39,7 @@ void main() {
 
     for (var subtype in wantedSubtypes) {
       test('wanted: $subtype', () {
-        var message = new Message()..subtype = subtype;
+        var message = new Message()..type = subtype;
 
         var result = sut.hasUnwantedSubtype(message);
 
@@ -49,7 +49,7 @@ void main() {
 
     for (var subtype in unwantedSubtypes) {
       test('unwanted: $subtype', () {
-        var message = new Message()..subtype = subtype;
+        var message = new Message()..type = subtype;
 
         var result = sut.hasUnwantedSubtype(message);
 

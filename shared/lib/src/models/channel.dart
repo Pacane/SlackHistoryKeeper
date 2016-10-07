@@ -5,10 +5,7 @@ import 'package:dogma_convert/serialize.dart';
 import 'package:slack_history_keeper_shared/convert.dart';
 
 class Channel {
-  @Serialize.field('id')
   String id;
-
-  @Serialize.field('name')
   String name;
 
   @override

@@ -6,7 +6,7 @@ class Attachment {
   @Serialize.field('id')
   int id;
   @Serialize.field('from_url')
-  String fromUrl;
+  String from_url;
   @Serialize.field('image_url')
-  String imageUrl;
+  String image_url;
 }

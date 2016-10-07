@@ -40,26 +40,27 @@ class PollingDaemon {
     if (lastMessage == null) {
       messages = await slackConnector.fetchChannelHistory(c.id);
     } else {
-      String lastTimeStampToFetch = lastMessage.timestamp;
+      String lastTimeStampToFetch = lastMessage.ts;
       messages = await slackConnector.fetchChannelHistory(c.id,
           lastTimestamp: lastTimeStampToFetch);
     }
 
     messages
       ..removeWhere((Message m) => isBlank(m.text))
-      ..removeWhere((Message m) => m.userId == 'USLACKBOT')
+      ..removeWhere((Message m) => m.user == 'USLACKBOT')
       ..removeWhere((Message m) => hasUnwantedSubtype(m));
 
     await messageRepository.insertMessages(messages);
   }
 
   bool hasUnwantedSubtype(Message m) {
-    if (isBlank(m.subtype)) {
+    if (isBlank(m.type)) {
       return false;
     }
 
-    return !['me_message', 'message_changed', 'message_deleted']
-        .contains(m.subtype);
+    var isUnwantedType =
+        ['me_message', 'message_changed', 'message_deleted'].contains(m.type);
+    return isUnwantedType;
   }
 
   /*

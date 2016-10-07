@@ -4,22 +4,20 @@ import 'package:dogma_convert/serialize.dart';
 import 'package:slack_history_keeper_shared/convert.dart';
 
 class Message {
-  static const String type = 'message';
-
   @Serialize.field('user')
-  String userId;
+  String user;
 
   @Serialize.field('subtype')
-  String subtype;
+  String type;
 
   @Serialize.field('ts')
-  String timestamp;
+  String ts;
 
   @Serialize.field('text')
   String text;
 
   @Serialize.field('channelId')
-  String channelId;
+  String channel;
 
   @Serialize.field('score')
   num score;
@@ -27,11 +25,11 @@ class Message {
   @override
   String toString() {
     var timestampInMilliseconds = new DateTime.fromMillisecondsSinceEpoch(
-        (double.parse(timestamp) * 1000).toInt());
+        (double.parse(ts) * 1000).toInt());
 
     var parsedDateTime = timestampInMilliseconds;
 
-    return '$parsedDateTime:$userId:$text';
+    return '$parsedDateTime:$user:$text';
   }
 
   Map toJson() => new MessageEncoder().convert(this);

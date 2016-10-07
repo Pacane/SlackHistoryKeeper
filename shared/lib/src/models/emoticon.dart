@@ -4,10 +4,7 @@ import 'package:dogma_convert/serialize.dart';
 import 'package:slack_history_keeper_shared/convert.dart';
 
 class Emoticon {
-  @Serialize.field('name')
   String name;
-
-  @Serialize.field('url')
   String url;
 
   Emoticon();
