@@ -7,20 +7,14 @@ homepage: http://stacktrace.ca
 environment:
   sdk: '>=1.0.0 <2.0.0'
 dependencies:
-  http: "^0.11.3+2"
+  http: '>=0.11.3+9 <0.12.0'
   logging: "^0.11.1+1"
   connection_pool: "^0.1.0+2"
   slack_history_keeper_shared:
     path: ../shared
-  mongo_dart: '0.2.9'
+  mongo_dart: '>=0.2.10 <0.3.0'
+  redstone: '>=0.6.7 <0.7.0'
 dependency_overrides:
-  redstone:
-    git: https://github.com/redstone-dart/redstone.git
-  di:
-    git: https://github.com/Pacane/di.dart.git
-  mongo_dart:
-    git: https://github.com/meriouma/mongo_dart.git
-  mongo_dart_query: "^0.2.2"
   analyzer: 0.27.0
 dev_dependencies:
   test: "^0.12.4+9"

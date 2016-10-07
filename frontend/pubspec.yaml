@@ -9,17 +9,17 @@ dependencies:
   browser: '^0.10.0+2'
   http: "^0.11.3+2"
   sass: '^0.4.2'
-  markdown: "^0.11.1"
+  markdown: '^0.11.1'
   slack_history_keeper_shared:
     path: ../shared
-  event_bus: "^0.4.1"
+  event_bus: '^0.4.1'
   script_inliner: "^1.0.0"
   dart_to_js_script_rewriter: "^0.1.0+4"
 dependency_overrides:
   code_transformers: 0.3.1
 dev_dependencies:
-  test: "^0.12.6+1"
-  mockito: "^0.11.0"
+  test: '^0.12.15+9'
+  mockito: '^1.0.1'
 transformers:
   - angular2:
       entry_points: web/main.dart
