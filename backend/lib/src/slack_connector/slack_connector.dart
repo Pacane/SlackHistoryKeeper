@@ -28,7 +28,7 @@ class SlackConnector {
       var user = userDecoder.convert(map);
       user.avatar = map['profile']['image_32'];
       return user;
-    }).toList() as List<User>;
+    }).toList();
 
     Map<String, User> usersCache = {};
     members.forEach((User u) => usersCache[u.id] = u);
@@ -40,7 +40,7 @@ class SlackConnector {
   Future<Map> _fetchChannelHistory(String channelId,
       {String lastMessageTimestamp: '0'}) async {
     String oldestMessageParameter =
-        lastMessageTimestamp != 0 ? "&oldest=$lastMessageTimestamp" : "";
+        lastMessageTimestamp != '0' ? "&oldest=$lastMessageTimestamp" : "";
 
     String url =
         'https://slack.com/api/channels.history?token=$slackApiToken&channel=$channelId&pretty=1$oldestMessageParameter';

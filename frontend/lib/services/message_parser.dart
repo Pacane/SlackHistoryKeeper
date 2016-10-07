@@ -1,6 +1,8 @@
 import 'package:angular2/angular2.dart';
 import 'package:angular2/core.dart' show Pipe;
 import 'package:markdown/markdown.dart';
+import 'package:angular2/src/security/dom_sanitization_service.dart';
+import 'package:slack_history_keeper_frontend/emojis/emojis.dart';
 import 'package:slack_history_keeper_frontend/services/slack_service.dart';
 import 'package:slack_history_keeper_shared/models.dart';
 
@@ -13,10 +15,12 @@ const List parserBindings = const [
 @Pipe(name: 'messageParser', pure: true)
 @Injectable()
 class MessageParser implements PipeTransform {
-  List<InlineSyntax> inlineSyntaxes = [];
+  List<InlineSyntax> inlineSyntaxes = <InlineSyntax>[];
+  DomSanitizationService sanitizationService;
 
-  MessageParser(MentionSyntax mentionSyntax, EmoticonSyntax emoticonSyntax) {
-    inlineSyntaxes = [
+  MessageParser(this.sanitizationService, MentionSyntax mentionSyntax,
+      EmoticonSyntax emoticonSyntax) {
+    inlineSyntaxes = <InlineSyntax>[
       new TagSyntax(r'\*\*', tag: 'strong'),
       new TagSyntax(r'\*', tag: 'strong'),
       new TagSyntax(r'\~', tag: 'strike'),
@@ -26,11 +30,10 @@ class MessageParser implements PipeTransform {
     ];
   }
 
-  @override
-  String transform(String message, List args) {
-    return markdownToHtml(message,
+  SafeHtml transform(String message) {
+    return sanitizationService.bypassSecurityTrustHtml(markdownToHtml(message,
         inlineSyntaxes: inlineSyntaxes,
-        blockSyntaxes: [new FencedCodeBlockSyntax()]);
+        blockSyntaxes: [new FencedCodeBlockSyntax()]));
   }
 }
 
@@ -44,17 +47,18 @@ class MentionSyntax extends InlineSyntax {
   bool onMatch(InlineParser parser, Match match) {
     var userId = match.group(1);
     var user = slackService.getUserFromId(userId);
-    var anchor = new Element.text('strong', '@' + user.name);
+    var mention = new Element.text('strong', '@${user.name}');
 
-    parser.addNode(anchor);
+    parser.addNode(mention);
     return true;
   }
 }
 
 @Injectable()
 class EmoticonSyntax extends InlineSyntax {
-  static const String emojisUrl =
-      'https://raw.githubusercontent.com/arvida/emoji-cheat-sheet.com/master/public/graphics/emojis';
+  static const String emojisUrl = 'http://unicodey.com/emoji-data/img-apple-64';
+  static const String aliasToken = 'alias:';
+
   final SlackService slackService;
 
   EmoticonSyntax(this.slackService)
@@ -65,7 +69,7 @@ class EmoticonSyntax extends InlineSyntax {
     var name = match.group(1);
     var emoticon = slackService.getEmoticonFromName(name);
 
-    while (emoticon != null && emoticon.url.startsWith('alias:')) {
+    while (emoticon != null && emoticon.url.startsWith(aliasToken)) {
       name = emoticon.url.substring(6);
       emoticon = slackService.getEmoticonFromName(name);
     }
@@ -81,21 +85,24 @@ class EmoticonSyntax extends InlineSyntax {
     if (emoticon != null) {
       img.attributes['src'] = emoticon.url;
     } else {
-      img.attributes['src'] = "$emojisUrl/$name.png";
+      img.attributes['src'] = "$emojisUrl/${Emojis.getChar(name)}.png";
     }
 
     img.attributes['alt'] = name;
     img.attributes['class'] = "emoji";
-    img.attributes['onerror'] = "javascript: this.src = '$emojisUrl/x.png';";
+    img.attributes['onerror'] =
+        "javascript:{var element = document.createElement('i'); element.innerText=':$name:';this.parentNode.replaceChild(element, this);}";
     return img;
   }
 }
 
 class FencedCodeBlockSyntax extends BlockSyntax {
-  RegExp get pattern => new RegExp(r'^[ ]{0,3}(`{3,}|~{3,})(.*)$');
-
   const FencedCodeBlockSyntax();
 
+  @override
+  RegExp get pattern => new RegExp(r'^[ ]{0,3}(`{3,}|~{3,})(.*)$');
+
+  @override
   List<String> parseChildLines(BlockParser parser, [String endBlock]) {
     if (endBlock == null) endBlock = '';
 
@@ -116,6 +123,7 @@ class FencedCodeBlockSyntax extends BlockSyntax {
     return childLines;
   }
 
+  @override
   Node parse(BlockParser parser) {
     // Get the syntax identifier, if there is one.
     var match = pattern.firstMatch(parser.current);
