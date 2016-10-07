@@ -11,7 +11,7 @@ class Emojis {
         .then((json) => _emojis = JSON.decode(json));
   }
 
-  static dynamic getChar(String emojiName) {
+  static String getChar(String emojiName) {
     var emoji = _emojis[emojiName] ??
         _emojis[emojiName.replaceAll(new RegExp('_face\$'), '')];
 

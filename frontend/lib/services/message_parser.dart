@@ -57,6 +57,8 @@ class MentionSyntax extends InlineSyntax {
 @Injectable()
 class EmoticonSyntax extends InlineSyntax {
   static const String emojisUrl = 'http://unicodey.com/emoji-data/img-apple-64';
+  static const String aliasToken = 'alias:';
+
   final SlackService slackService;
 
   EmoticonSyntax(this.slackService)
@@ -67,7 +69,7 @@ class EmoticonSyntax extends InlineSyntax {
     var name = match.group(1);
     var emoticon = slackService.getEmoticonFromName(name);
 
-    while (emoticon != null && emoticon.url.startsWith('alias:')) {
+    while (emoticon != null && emoticon.url.startsWith(aliasToken)) {
       name = emoticon.url.substring(6);
       emoticon = slackService.getEmoticonFromName(name);
     }
